@@ -1,0 +1,3 @@
+## Ignore python stuff that gets created when you run
+*.pyc
+

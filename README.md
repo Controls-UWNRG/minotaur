@@ -15,7 +15,7 @@ Once you have downloaded all the required dependencies, go ahead and clone this 
 ```
 git clone https://github.com/Controls-UWNRG/minotaur.git
 ```
-Then navigate to the `UWNRG_CURRENT` folder (we really need a better name) and run `python main.py` (or `python2 main.py` if you have python 3.x installed).
+Then navigate to the `UWNRG_CURRENT` folder (we really need a better name) and run `python main.py` (or `python2 main.py` if you have python 3.x installed). Make sure to include `--noport` as a flag when running the code on your personal machine so that the program ignores the absense of the actuator connection.
 
 ###Other questions
 The [wiki](https://github.com/Controls-UWNRG/minotaur/wiki/) has a lot of resources in case you want more information. It's pretty ancient though.

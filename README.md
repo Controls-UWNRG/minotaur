@@ -1,7 +1,7 @@
 Minotaur
---------
+========
 University of Waterloo Nano Robotics Group Controls Software
-============================================================
+------------------------------------------------------------
 
 ###Setup
 ####Linux/MacOS
@@ -18,5 +18,5 @@ git clone https://github.com/Controls-UWNRG/minotaur.git
 Then navigate to the `UWNRG_CURRENT` folder (we really need a better name) and run `python main.py` (or `python2 main.py` if you have python 3.x installed).
 
 ###Other questions
-The (wiki)[../wiki/] has a lot of resources in case you want more information. It's pretty ancient though.
+The [wiki](https://github.com/Controls-UWNRG/minotaur/wiki/) has a lot of resources in case you want more information. It's pretty ancient though.
 

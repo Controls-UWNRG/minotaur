@@ -1,6 +1,6 @@
 Minotaur
 ========
-University of Waterloo Nano Robotics Group Controls Software
+UWaterloo Nano Robotics Group Controls Software
 ------------------------------------------------------------
 
 ###Setup

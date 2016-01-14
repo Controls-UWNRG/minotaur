@@ -1,10 +1,17 @@
 #!/bin/bash
 # Setup NRG Minotaur script
 
-echo "Hello World!"
+cat << EOF 
 
-# Install Homebrew
-# ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+####################################
+      UW_NRG Minotaur Setup 
+####################################
+* Xcode command line tools is needed to install homebrew
+* Homebrew must be installed
+
+EOF
+
+# Check to see if homebrew is installed
 
 # Install Python 2.7
 #brew install python

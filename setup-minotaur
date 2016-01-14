@@ -1,0 +1,22 @@
+#!/bin/bash
+# Setup NRG Minotaur script
+
+echo "Hello World!"
+
+# Install Homebrew
+# ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# Install Python 2.7
+#brew install python
+# Install pip 
+#python get-pip.py
+
+# Install pyserial, pygtk, numpy
+#sudo pip install pyserial
+#sudo pip install numpy
+#brew install pygtk
+
+#brew tap homebrew/science
+#brew install opencv
+
+#export PATH=$PATH:/usr/local/lib/python2.7/site-packages

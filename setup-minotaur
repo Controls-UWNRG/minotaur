@@ -6,12 +6,18 @@ cat << EOF
 ####################################
       UW_NRG Minotaur Setup 
 ####################################
-* Xcode command line tools is needed to install homebrew
-* Homebrew must be installed
-
 EOF
 
+fancy_echo() {
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
+}
+
+fancy_echo "hello there...." "$1"
 # Check to see if homebrew is installed
+# curl -fsS 'https://raw.githubusercontent.com/Homebrew/install/master/install'
 
 # Install Python 2.7
 #brew install python

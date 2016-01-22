@@ -20,3 +20,10 @@ Then navigate to the `UWNRG_CURRENT` folder (we really need a better name) and r
 ###Other questions
 The [wiki](https://github.com/Controls-UWNRG/minotaur/wiki/) has a lot of resources in case you want more information. It's pretty ancient though.
 
+###C++ Migration
+####Goals and Requirements:
+* Cross-platform development and deployment
+* Maintainable object-oriented architecture
+* Abstracted implementation and approachable interface
+* High-speed architecture for real-time data crunching (read image recognition)
+* More to come...

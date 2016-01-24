@@ -54,7 +54,7 @@ C++ is not an angel either. However, good structural foundations in a powerful o
 
 #### Development
 ##### Setup
-For now, you only need to get the (Qt Framework)[http://www.qt.io/download/]. You can also get Qt Creator in order to build the code with one button and use their form editor for easy GUI design. You can open the project by specifying the folder `minotaur` and then build and run the code from there.
+For now, you only need to get the [Qt Framework](http://www.qt.io/download/). You can also get Qt Creator in order to build the code with one button and use their form editor for easy GUI design. You can open the project by specifying the folder `minotaur` and then build and run the code from there.
 
 ##### Contributing
-Any help would be greatly appreciated. The entire code base is pretty big, there is a lot of code to be rewritten. If you want to help out, let (me)[https://github.com/sadmansk] and we will figure something out.
+Any help would be greatly appreciated. The entire code base is pretty big, there is a lot of code to be rewritten. If you want to help out, let [me](https://github.com/sadmansk) and we will figure something out.

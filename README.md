@@ -10,7 +10,7 @@ First, make sure that you have `pip` installed. The installation structure varie
 #### Windows
 Refer to the [Third Party Software](https://github.com/Controls-UWNRG/minotaur/wiki/Third-Party-Libraries) page of the wiki for setting up the code on Windows. Using Git bash is highly recommended for using `git` commands.
 
-#### Alternative (easier) setup on Windows: Cygwin:
+#### Alternative (easier) setup on Windows: Cygwin
 [Cygwin](https://cygwin.com/) is a great unix-style set of packages and terminal on Windows. When running the setup, you can choose any set of packages that you want, but in addition, you need the following packages:
 * `python`
 * `python-setuptools`
@@ -23,6 +23,8 @@ Refer to the [Third Party Software](https://github.com/Controls-UWNRG/minotaur/w
 * `xorg-docs` (optional, for man pages)
 
 Once the installation is finished, you can launch the cygwin terminal and type `easy_install-2.x pip` where 2.x is the version of python that you have. If you are not sure about what version you have, run `python -V` (only include the first two digits, e.g. 2.7 if version is 2.7.10). You can then install all the python libraries using `pip install` using the same instructions as MacOS and Linux users.
+
+You have to run the program from an X terminal, so run `xinit -multiwindow -clipboard` to launch an xterm. Run your code from the terminal that opens up.
 
 #### Cloning and running the code
 Once you have downloaded all the required dependencies, go ahead and clone this repository:

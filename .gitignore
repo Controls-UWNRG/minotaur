@@ -55,3 +55,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Qt builds and profiles
+builds/
+*.pro.user

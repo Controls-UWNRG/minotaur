@@ -1,6 +1,51 @@
-#!/bin/bash
+#!/bin/bash -e
 # Setup NRG Minotaur script
 
+#### Functions
+fancy_echo() {
+  local fmt="$1"; shift
+  printf "\n$fmt\n" "$@" 
+}
+
+## Install/Upgrading with Homebrew
+brew_install_or_upgrade() {
+  if brew_is_installed "$1"; then
+    if brew_is_upgradable "$1"; then
+      fancy_echo "Upgrading %s ..." "$1"
+    else
+      fancy_echo "Already has latest version of %s. Skipping..." "$1"
+    fi
+  else
+    fancy_echo "Installing %s ..." "$1"
+    brew install "$@"
+  fi
+}
+
+brew_is_installed() {
+  local name
+  name="$(brew_expand_alias "$1")"
+  
+  brew list -1 | grep -Fqx "$name"
+}
+
+brew_is_upgradable() {
+  local name
+  name="$(brew_expand_alias "$1")"
+
+  ! brew outdated --quiet "$name" >/dev/null
+}
+
+brew_expand_alias() {
+  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/.*\//, ""); gsub(/:/, ""); print $1}'
+}
+
+brew_tap() {
+  brew tap "$1" 2>/dev/null
+}
+
+## Pip
+
+#### Setup
 cat << EOF 
 
 ####################################
@@ -8,28 +53,38 @@ cat << EOF
 ####################################
 EOF
 
-fancy_echo() {
-  local fmt="$1"; shift
-
-  # shellcheck disable=SC2059
-  printf "\n$fmt\n" "$@"
-}
-
-fancy_echo "hello there...." "$1"
 # Check to see if homebrew is installed
-# curl -fsS 'https://raw.githubusercontent.com/Homebrew/install/master/install'
+if ! command -v brew >/dev/null; then
+  echo "Installing Homebrew..."
+    curl -fsS \ 
+      'https://raw.githubusercontent.com/Homebrew/install/master/install'
+    export PATH="/usr/local/bin:$PATH"
+else
+  echo "Homebrew is already installed. Skipping..."
+fi
+
+if brew list | grep -Fq brew-cask; then
+  echo "Uninstalling old Homebrew-Cask..."
+  brew uninstall --force brew-cask
+fi
+
+echo "#### Updating Homebrew items ####"
+brew update
 
 # Install Python 2.7
-#brew install python
-# Install pip 
+brew_install_or_upgrade 'python'
+#export PATH='/usr/local/lib/python2.7/site-packages:$PATH'
+
+# Install pip
+echo "Installing pip..." 
 #python get-pip.py
 
 # Install pyserial, pygtk, numpy
+echo "Installing pyserial, pygtk, and numpy..."
 #sudo pip install pyserial
 #sudo pip install numpy
-#brew install pygtk
+#brew_install_or_upgrade  'pygtk'
 
-#brew tap homebrew/science
-#brew install opencv
+#brew_tap 'homebrew/science'
+#brew_install_or_upgrade opencv
 
-#export PATH=$PATH:/usr/local/lib/python2.7/site-packages

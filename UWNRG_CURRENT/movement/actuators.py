@@ -6,7 +6,7 @@ import serial.tools.list_ports as list_ports
 import struct as struct
 import time as time
 import thread as thread
-#test 
+
 DEFAULT_SPEED = 100
 overshoot = 300
 
@@ -1362,7 +1362,7 @@ class Actuators():
                                  byte_array[1],
                                  byte_array[2],
                                  byte_array[3])
-        
+
         if (vector[1] != 0 and self.__in_y_movement and self.__y_direction != 0):
             temp = -1 if vector[1] < 0 else 1
 

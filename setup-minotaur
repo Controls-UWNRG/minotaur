@@ -1,5 +1,5 @@
 #!/bin/bash -e
-# Setup NRG Minotaur script
+# NRG Minotaur setup script
 
 #### Functions
 fancy_echo() {
@@ -43,8 +43,6 @@ brew_tap() {
   brew tap "$1" 2>/dev/null
 }
 
-## Pip
-
 #### Setup
 cat << EOF 
 
@@ -71,20 +69,24 @@ fi
 echo "#### Updating Homebrew items ####"
 brew update
 
-# Install Python 2.7
+# Install Python 2.7.x
+# should come with setup tools and pip
 brew_install_or_upgrade 'python'
-#export PATH='/usr/local/lib/python2.7/site-packages:$PATH'
-
-# Install pip
-echo "Installing pip..." 
-#python get-pip.py
+# Solves potential problem if there was a previous version of python installed
+# brew unlink python && brew link python
+# hash -r python
 
 # Install pyserial, pygtk, numpy
-echo "Installing pyserial, pygtk, and numpy..."
-#sudo pip install pyserial
-#sudo pip install numpy
-#brew_install_or_upgrade  'pygtk'
+printf "\nInstalling or upgrading pygtk, pyserial, and numpy...\n"
+sudo -H pip install --upgrade pyserial
+sudo -H pip install --upgrade numpy
+brew_install_or_upgrade 'pygtk'
 
-#brew_tap 'homebrew/science'
-#brew_install_or_upgrade opencv
+brew_tap 'homebrew/science'
+brew_install_or_upgrade 'opencv'
 
+cat << EOF
+####################################
+           End of setup!! :)
+####################################
+EOF

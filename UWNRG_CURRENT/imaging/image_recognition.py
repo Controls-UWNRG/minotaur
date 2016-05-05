@@ -120,6 +120,9 @@ class ImageRecognition:
        
         return np.asarray(frame)
     
+    def give_path(self):    #returns path draw on frame
+        return (self.point_x, self.point_y, self.point_count)
+
     def get_frame_with_corners(self):
         """ Get numpy frame with corners drawn on, and alignment lines if relevant """
         '''

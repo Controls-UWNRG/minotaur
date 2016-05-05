@@ -73,16 +73,12 @@ class MainWindow:
         event -- contains information about the key press event
 
         """
-        direction_conversion = {ord('a'): (-1, 0, 0),
-                                ord('d'): (1, 0, 0),
-                                ord('w'): (0, 1, 0),
-                                ord('s'): (0, -1, 0),
-                                ord('W'): (0, 1, 0),
-                                ord('S'): (0, -1, 0),
-                                ord('A'): (-1, 0, 0),
-                                ord('D'): (1, 0, 0),
-                                ord('e'): (0, 0, 1),
-                                ord('q'): (0, 0, -1)}
+        direction_conversion = {97: (-1, 0, 0),
+                                100: (1, 0, 0),
+                                119: (0, 1, 0),
+                                115: (0, -1, 0),
+                                101: (0, 0, 1),
+                                113: (0, 0, -1)}
 
         speed_change = {45 : -1, 43 : 113}
 
@@ -107,16 +103,12 @@ class MainWindow:
 
         """
         # 97=a, 100=d, 119=w, 115=s
-        direction_conversion = {ord('a'): (-1, 0, 0),
-                                ord('d'): (1, 0, 0),
-                                ord('w'): (0, 1, 0),
-                                ord('s'): (0, -1, 0),
-                                ord('W'): (0, 1, 0),
-                                ord('S'): (0, -1, 0),
-                                ord('A'): (-1, 0, 0),
-                                ord('D'): (1, 0, 0),
-                                ord('e'): (0, 0, 1),
-                                ord('q'): (0, 0, -1)}
+        direction_conversion = {97: (-1, 0, 0),
+                                100: (1, 0, 0),
+                                119: (0, 1, 0),
+                                115: (0, -1, 0),
+                                101: (0, 0, 1),
+                                113: (0, 0, -1)}
 
         key_pressed = event.keyval
 
@@ -142,22 +134,14 @@ class MainWindow:
 
     def __deactivate_arrow(self, key):
         # 97=a, 100=d, 119=w, 115=s
-        direction_conversion = {ord('a'): "arrow_left",
-                                ord('d'): "arrow_right",
-                                ord('w'): "arrow_up",
-                                ord('s'): "arrow_down",
-                                ord('A'): "arrow_left",
-                                ord('D'): "arrow_right",
-                                ord('W'): "arrow_up",
-                                ord('S'): "arrow_down"}
-        rotation = {ord('a'): 1,
-                    ord('d'): 3,
-                    ord('w'): 0,
-                    ord('s'): 2,
-                    ord('A'): 1,
-                    ord('D'): 3,
-                    ord('W'): 0,
-                    ord('S'): 2}
+        direction_conversion = {97: "arrow_left",
+                                100: "arrow_right",
+                                119: "arrow_up",
+                                115: "arrow_down"}
+        rotation = {97: 1,
+                    100: 3,
+                    119: 0,
+                    115: 2}
         if key not in direction_conversion:
             return
         pixbuf = self.base_arrow_pixbuf.rotate_simple(rotation[key] * 90)
@@ -165,23 +149,14 @@ class MainWindow:
 
     def __activate_arrow(self, key):
         # 97=a, 100=d, 119=w, 115=s
-        direction_conversion = {ord('a'): "arrow_left",
-                                ord('d'): "arrow_right",
-                                ord('w'): "arrow_up",
-                                ord('s'): "arrow_down",
-                                ord('A'): "arrow_left",
-                                ord('D'): "arrow_right",
-                                ord('W'): "arrow_up",
-                                ord('S'): "arrow_down"}
-        rotation = {ord('a'): 1,
-                    ord('d'): 3,
-                    ord('w'): 0,
-                    ord('s'): 2,
-                    ord('A'): 1,
-                    ord('D'): 3,
-                    ord('W'): 0,
-                    ord('S'): 2}
-                    
+        direction_conversion = {97: "arrow_left",
+                                100: "arrow_right",
+                                119: "arrow_up",
+                                115: "arrow_down"}
+        rotation = {97: 1,
+                    100: 3,
+                    119: 0,
+                    115: 2}
         if key not in direction_conversion:
             return
         pixbuf = self.base_arrow_on_pixbuf.rotate_simple(rotation[key] * 90)
@@ -214,42 +189,6 @@ class MainWindow:
 
     def __circle_path(self, menu_item):
         facade.circle_path(self.__x_axis_inverted, self.__y_axis_inverted)
-
-    def __move_circle_start(self, menu_item):
-        facade.move_to_circle_start(self.__x_axis_inverted, self.__y_axis_inverted)
-
-    def __move_top_right(self, menu_item):
-        facade.move_to_top_right(self.__x_axis_inverted, self.__y_axis_inverted)
-    def __open_pick_shapes_window(self, menu_item):
-        shape_window = self.__builder.get_object("pick_shape_window")
-        shape_window.show()
-
-    def __set_shape_counts(self, button):
-        fields = ["triangle", "circle", "rectangle"]
-        shape_info = [{}, {}, {}]
-        used_order = [False, False, False]
-        for field in fields:
-            count_field = self.__builder.get_object(field + "_count")
-            count = count_field.get_text()
-            order_field = self.__builder.get_object(field + "_order")
-            order = order_field.get_text()
-            if not order.isdigit() or not count.isdigit():
-                log.log_error("Order and count must be numbers")
-            else:
-                index = int(order)-1
-                if used_order[index]:
-                    log.log_error("Duplicate order number {0}".format(index+1))
-                    return
-
-                used_order[index] = True
-                shape_info[index]["shape"] = field
-                shape_info[index]["count"] = int(count)
-        self.__close_pick_shapes_window(button)
-        facade.draw_shapes(self.__x_axis_inverted, self.__y_axis_inverted, shape_info)
-
-    def __close_pick_shapes_window(self, button):
-        shape_window = self.__builder.get_object("pick_shape_window")
-        shape_window.hide()
 
     def __navigate_maze(self, menu_item):
         """ Strip out the selected paths and pass them to the movement controller """
@@ -314,7 +253,8 @@ class MainWindow:
             "on_emma_mode_actuator_radio_toggled" : self.__switch_mode_EMMA_actuator,
             "on_emma_mode_solenoid_radio_toggled" : self.__switch_mode_EMMA_solenoid,
             "on_maze_frame_refresh" : self.__refresh_maze_frame,
-            "on_maze_frame_confirm" : self.__confirm_maze_frame,
+            #"on_maze_frame_confirm" : self.__confirm_maze_frame,
+            "on_confirm_robot_path": self.__confirm_robot_path,
             "on_ir_preview_activate" : self.__preview_image_recognition,
             #"on_field_image_butt:on_press_event" : self.__mark_corner,
             "on_field_image_button_press_event" : self.__mark_path,
@@ -327,11 +267,6 @@ class MainWindow:
             "on_box_path_activate" : self.__box_path,
             "on_triangle_path_activate" : self.__triangle_path,
             "on_circle_path_activate" : self.__circle_path,
-            "on_move_to_circle_start_activate" : self.__move_circle_start,
-            "on_move_to_top_right_activate" : self.__move_top_right,
-            "on_pick_shapes" : self.__open_pick_shapes_window,
-            "on_shape_ok_clicked" : self.__set_shape_counts,
-            "on_shape_cancel_clicked" : self.__close_pick_shapes_window,
             "on_video_camera_activate" : self.__video_camera,
             "on_navigate_maze" : self.__open_maze_navigate_dialog,
             "on_main_window_key_release_event" :
@@ -552,6 +487,10 @@ class MainWindow:
 
         self.__navigate_maze(item)
     
+    def __confirm_robot_path(self, item):
+        log.log_info("Moving robot!")
+        facade.follow_path(self.__x_axis_inverted, self.__y_axis_inverted)
+
     def __mark_corner(self, item, mouse_event):
         """ Marks a corner of the field on the camera frame
         (thus allowing us to determine acceptable alignments
@@ -571,7 +510,7 @@ class MainWindow:
         """ Resets path of the field on the camera frame of the maze window """
         if event.keyval == 114:   #Resets with key 'r'
             facade.reset_path()
-
+            #facade.end_move();
         self.__refresh_maze_frame(item)
 
     def __preview_camera_feed(self, menu_item):

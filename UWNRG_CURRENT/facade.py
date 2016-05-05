@@ -43,23 +43,24 @@ def mark_path(mouse_event):
     _ir.mark_point(mouse_event.x, mouse_event.y)
     log.log_info("Point marked at " + (str)(mouse_event.x) + ", "  + (str)(mouse_event.y) + ".")
 
+def follow_path(x_axis_inverted, y_axis_inverted):  #robot to follow 2D path drawn on navigate maze
+    paths = {}
+    point_x, point_y, point_count = _ir.give_path()
+    for i in range(0, point_count-1):
+        paths[i] = (point_x[i+1]-point_x[i], point_y[i+1]-point_y[i], 0)
+    '''
+    for i in range(0, self.vector_count-1):
+        move(paths[i], x_axis_inverted, y_axis_inverted)
+    '''
+	
 def box_path(x_axis_inverted, y_axis_inverted):
     _movement_controller.box_path(x_axis_inverted, y_axis_inverted)
-
-def draw_shapes(x_axis_inverted, y_axis_inverted, shape_info):
-    _movement_controller.draw_shapes(x_axis_inverted, y_axis_inverted, shape_info)
 
 def triangle_path(x_axis_inverted, y_axis_inverted):
     _movement_controller.triangle_path(x_axis_inverted, y_axis_inverted)
 
 def circle_path(x_axis_inverted, y_axis_inverted):
     _movement_controller.circle_path(x_axis_inverted, y_axis_inverted)
-
-def move_to_circle_start(x_axis_inverted, y_axis_inverted):
-    _movement_controller.move_to_circle_start(x_axis_inverted, y_axis_inverted)
-
-def move_to_top_right(x_axis_inverted, y_axis_inverted):
-    _movement_controller.move_to_top_right(x_axis_inverted, y_axis_inverted)
 
 def figure_eight(x_axis_inverted, y_axis_inverted):
     _movement_controller.figure_eight(x_axis_inverted, y_axis_inverted)

@@ -447,14 +447,8 @@ class Actuators():
 
         time.sleep(true_delay)
 
-<<<<<<< cc3877373196b862c7a1f969e188181cc95faf87
-
     def circle_path(self, inverted_x_axis, inverted_y_axis, radius, start, end):
         '''This function should cause the robot to travel in a circle. It uses derivatives to determine speed.
-=======
-    def circle_path(self, inverted_x_axis, inverted_y_axis):
-        '''This function should cause the robot to travel in a circle. It uses derivatives to determine speed. 
->>>>>>> WIP Remap triangle path to diagonal path
         I have no idea if it will work (Not sure what I am doing with the actuators is sound). If that works
         you will have to play around with the constants.
         If the actuator command code fails, we will need to add more sleeps between each call and decrease the delay and

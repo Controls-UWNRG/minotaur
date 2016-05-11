@@ -37,8 +37,8 @@ class Controller():
 
     def triangle_path(self, inverted_x_axis, inverted_y_axis):
         if self.__actuators:
-            self.__actuators.triangle_path(inverted_x_axis,
-                                          inverted_y_axis)
+            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis)
+            # self.__actuators.triangle_path(inverted_x_axis, inverted_y_axis)
             #haven't implemented rotation yet
         else:
             log.log_error("Actuators have not been initialized" \

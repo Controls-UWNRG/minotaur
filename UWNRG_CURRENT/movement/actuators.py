@@ -333,10 +333,8 @@ class Actuators():
                              0)
         log.log_info("Maze navigated!")
 
-    
     def getOvershootTime(self, max_speed):
-        return overshoot / self.__actuator_speed_to_actual_speed(max_speed)  
-
+        return overshoot / self.__actuator_speed_to_actual_speed(max_speed)
 
     def move_to_circle_start(self, inverted_x_axis, inverted_y_axis):
         """ Move from top-right corner to the start of the circle path """
@@ -448,7 +446,6 @@ class Actuators():
 
 
         time.sleep(true_delay)
-
 
     def circle_path(self, inverted_x_axis, inverted_y_axis):
         '''This function should cause the robot to travel in a circle. It uses derivatives to determine speed. 
@@ -564,7 +561,6 @@ class Actuators():
             0,
             0,
         )
-
 
     def triangle_path(self, inverted_x_axis, inverted_y_axis):
         """ TODO: Need to overshoot target corners, then pull back before making the next move """
@@ -1532,3 +1528,131 @@ class Actuators():
         temp = self.__y_device
         self.__y_device = self.__x_device
         self.__x_device = temp
+
+    """
+    ---------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------- ICRA 2016 ------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------
+    """
+    def diagonal_path(self, inverted_x_axis, inverted_y_axis):  # path_type, x_dir, y_dir, inverted_x_axis, inverted_y_axis):
+        """
+        For diagonal movement in the mobility challenge.
+
+        Parameters:
+        inverted_y_axis = inversion of actuators for y axis
+        inverted_x_axis = inversion of actuators for x axis
+        x_dir = direction string stating "up" or "down"
+        y_dir = direction string stating "left" or "right"
+        path_type = path type string stating "small" or "large" path (refer to competition field)
+        """
+
+        #height: 2mm or 2000+-20um
+        #length: 1.25mm or 1250+-20um
+
+        #limits the speeds so that the robot can use a constant speed in each direction
+        max_speed = 420.0
+
+        triangle_y_max_speed = 400.0
+        triangle_x_max_speed = 275.0
+
+        #stores the movements for the specified directions
+        x_left = _convert_int_to_bytes(-max_speed)
+        x_right = _convert_int_to_bytes(max_speed)  # not used
+        y_down = _convert_int_to_bytes(-max_speed)
+        y_up = _convert_int_to_bytes(max_speed)  # not used
+
+        x_hypo = _convert_int_to_bytes(triangle_x_max_speed)
+        y_hypo = _convert_int_to_bytes(triangle_y_max_speed)
+
+        #the delay for the first command to be processed
+        act_delay = 0.50
+
+        #height of the field (from the center of one gate to the center of the one below)
+        height_distance = 2100.0 + overshoot  # 2000 is actual distance
+
+        #the width of the field (from the center of the left section to the center of the right)
+        width_distance = 1200.0 + overshoot - 80  # 1250 is actual distance
+
+        # Note this is not /quite/ accurate as we aren't actually tavelling at max_speed
+        
+        diag_time = math.sqrt(
+            math.pow(width_distance, 2) + math.pow(height_distance, 2)
+            ) / self.__actuator_speed_to_actual_speed(max_speed+100)
+
+        # Store current position in register 0
+        save_start_position()
+
+        ''' Start movement '''
+        # TODO: Synchronize start and synchronize stop
+        # Start moving diagonally
+        thread.start_new_thread(act_move, (self.__y_device, y_hypo))
+        thread.start_new_thread(act_move, (self.__x_device, x_hypo))
+        time.sleep(diag_time)
+
+        # Stops y and x movement of actuators
+        stop(self.__y_device)
+        stop(self.__x_device)
+        ''' End of movement '''
+
+        ''' Overshoot '''
+        # Correct overshoot for the y axis
+        act_move(self.__y_device, y_down)
+        time.sleep(self.getOvershootTime(triangle_y_max_speed))
+        stop(self.__y_device)
+
+        # Correct overshoot for the x axis
+        act_move(self.__x_device, x_left)
+        time.sleep(self.getOvershootTime(triangle_x_max_speed))
+
+        # Stop overshoot
+        stop(self.__x_device)
+        time.sleep(act_delay)
+        ''' End of overshoot '''
+
+        # Return to stored start position
+        return_to_start_position()
+        time.sleep(act_delay)
+
+    def act_move(self, device, bytes):
+        log.log_info("Moving actuators in ??? direction (needs testing)")
+        self.__issue_command(
+            device,
+            22, bytes[0], bytes[1], bytes[2], bytes[3]
+        )
+        print "move"
+
+    def stop(self, device):
+        log.log_info("Stopping actuators")
+        self.__issue_command(
+            device,
+            23, 0, 0, 0, 0
+        )
+
+    def save_start_position(self):
+        """
+        Store current position in register 0,
+        to be used to return to in return_to_start_position
+        """
+        self.__issue_command(
+            self.__x_device,
+            16, 0, 0, 0, 0
+        )
+        self.__issue_command(
+            self.__y_device,
+            16, 0, 0, 0, 0
+        )
+
+    def return_to_start_position(self):
+        """
+        Returns to stored position in register 0 (previously saved start position),
+        set in save_start_position
+        """
+        self.__issue_command(
+            self.__x_device,
+            18, 0, 0, 0, 0
+        )
+
+        self.__issue_command(
+            self.__y_device,
+            18, 0, 0, 0, 0
+        )

@@ -234,8 +234,17 @@ class Controller():
         self.__control_schema = _EMMA_SOLENOIDS
         self.initialize_solenoids()
 
-    #----------------------------------ICRA 2016!!!---------------------------------
+    """----------------------------------ICRA 2016!!!---------------------------------"""
 
+    # path sizes
+    SMALL = "SMALL"
+    LARGE = "LARGE"
+
+    # directions
+    RIGHT = "RIGHT"
+    LEFT = "LEFT"
+    UP = "UP"
+    DOWN = "DOWN"
     # def move_between_nodes(self, start_node, dest_node):
     #     if start_node.__name == "03":
     #         if dest_node.__name in start_node.__adj_nodes:
@@ -299,14 +308,15 @@ class Controller():
     # This is the LARGE diagonal path
     def triangle_path(self, inverted_x_axis, inverted_y_axis):
         if self.__actuators:
-            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, "large")
+            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, [DOWN, LEFT], LARGE)
         else:
             self.log_actuator_init_error()
 
-    # This is the SMALL diagonal path
+    # This is the straight path
     def box_path(self, inverted_x_axis, inverted_y_axis):
         if self.__actuators:
-            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, "small")
+            self.__actuators.straight_path(inverted_x_axis, inverted_y_axis, LARGE, LEFT)
+            # self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, "small", ["down", "left"])
         else:
             self.log_actuator_init_error()
 

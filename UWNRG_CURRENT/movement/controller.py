@@ -26,50 +26,32 @@ class Controller():
             log.log_error("Actuators have not been initialized" \
                           "with a com-port properly")
     '''
-    def box_path(self, inverted_x_axis, inverted_y_axis):
-        if self.__actuators:
-            self.__actuators.box_path(inverted_x_axis,
-                                          inverted_y_axis)
-            #haven't implemented rotation yet
-        else:
-            log.log_error("Actuators have not been initialized" \
-                          " with a com-port properly.")
+    # def box_path(self, inverted_x_axis, inverted_y_axis):
+    #     if self.__actuators:
+    #         self.__actuators.box_path(inverted_x_axis,
+    #                                       inverted_y_axis)
+    #         #haven't implemented rotation yet
+    #     else:
+    #         log.log_error("Actuators have not been initialized" \
+    #                       " with a com-port properly.")
 
-    def triangle_path(self, inverted_x_axis, inverted_y_axis):
-        if self.__actuators:
-            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis)
-            # self.__actuators.triangle_path(inverted_x_axis, inverted_y_axis)
-            #haven't implemented rotation yet
-        else:
-            log.log_error("Actuators have not been initialized" \
-                          " with a com-port properly.")
+    # def triangle_path(self, inverted_x_axis, inverted_y_axis):
+    #     if self.__actuators:
+    #         self.__actuators.triangle_path(inverted_x_axis, inverted_y_axis)
+    #         #haven't implemented rotation yet
+    #     else:
+    #         log.log_error("Actuators have not been initialized" \
+    #                       " with a com-port properly.")
 
-    def circle_path(self, inverted_x_axis, inverted_y_axis):
-        if self.__actuators:
-            self.__actuators.circle_path(inverted_x_axis,
-                                          inverted_y_axis, 1, 0, 180)
-        else:
-            log.log_error("Actuators have not been initialized" \
-                          " with a com-port properly.")
-
-    def move_to_circle_start(self, inverted_x_axis, inverted_y_axis):
-        if self.__actuators:
-            self.__actuators.move_to_circle_start(inverted_x_axis,
-                                          inverted_y_axis)
-        else:
-            log.log_error("Actuators have not been initialized" \
-                          " with a com-port properly.")
-
-    def move_to_top_right(self, inverted_x_axis, inverted_y_axis):
-        if self.__actuators:
-            self.__actuators.move_to_top_right(inverted_x_axis,
-                                          inverted_y_axis)
-        else:
-            log.log_error("Actuators have not been initialized" \
-                          " with a com-port properly.")
-
-    def figure_eight(self, inverted_x_axis, inverted_y_axis):
-        log.log_error("No figure eight")
+    # def circle_path(self, inverted_x_axis, inverted_y_axis):
+    #     if self.__actuators:
+    #         self.__actuators.circle_path(inverted_x_axis,
+    #                                       inverted_y_axis)
+    #         #haven't implemented rotation yet
+    #     else:
+    #         log.log_error("Actuators have not been initialized" \
+    #                       " with a com-port properly.")
+    #def figure_eight(self, inverted_x_axis, inverted_y_axis):
 
     def get_available_com_ports(self):
         """ Returns a list of available com-ports """
@@ -255,51 +237,51 @@ class Controller():
     #----------------------------------ICRA 2016!!!---------------------------------
 
     # def move_between_nodes(self, start_node, dest_node):
-	# 	if start_node.__name == "03":
-	# 		if dest_node.__name in start_node.__adj_nodes:
-	# 			if dest_node.__name == "02":
-	# 				# Go down 1 unit, go right 1 unit
+    #     if start_node.__name == "03":
+    #         if dest_node.__name in start_node.__adj_nodes:
+    #             if dest_node.__name == "02":
+    #                 # Go down 1 unit, go right 1 unit
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "26":
-	# 				# Go up 1 unit, go right 1 unit
+    #             elif dest_node.__name == "26":
+    #                 # Go up 1 unit, go right 1 unit
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "11":
-	# 				# Circle(radius = 1, start = 180, end = 225)
+    #             elif dest_node.__name == "11":
+    #                 # Circle(radius = 1, start = 180, end = 225)
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "15":
-	# 				# Circle(radius = 1, start = 180, end = 135)
+    #             elif dest_node.__name == "15":
+    #                 # Circle(radius = 1, start = 180, end = 135)
     #                 log.log_info("a")
-	# 			else:
-	# 				#invalid node
+    #             else:
+    #                 #invalid node
     #                 log.log_info("Invalid node")
-	# 		else:
-	# 			#invalid node
+    #         else:
+    #             #invalid node
     #             log.log_info("Invalid node")
     #
-	# 		return
+    #         return
     #
-	# 	if start_node.__name == "11":
-	# 		if dest_node.__name in start_node.__adj_nodes:
-	# 			if dest_node.__name == "02":
-	# 				# Go down 1 unit, go right 1 unit
+    #     if start_node.__name == "11":
+    #         if dest_node.__name in start_node.__adj_nodes:
+    #             if dest_node.__name == "02":
+    #                 # Go down 1 unit, go right 1 unit
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "26":
-	# 				# Go up 1 unit, go right 1 unit
+    #             elif dest_node.__name == "26":
+    #                 # Go up 1 unit, go right 1 unit
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "11":
-	# 				# Circle(radius = 1, start = 180, end = 225)
+    #             elif dest_node.__name == "11":
+    #                 # Circle(radius = 1, start = 180, end = 225)
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "15":
-	# 				# Circle(radius = 1, start = 180, end = 135)
+    #             elif dest_node.__name == "15":
+    #                 # Circle(radius = 1, start = 180, end = 135)
     #                 log.log_info("a")
-	# 			else:
-	# 				#invalid node
+    #             else:
+    #                 #invalid node
     #                 log.log_info("Invalid node")
-	# 		else:
-	# 			#invalid node
+    #         else:
+    #             #invalid node
     #             log.log_info("Invalid node")
     #
-	# 		return
+    #         return
 
     def initialize_nodes(self):
         log.log_info("Nodes initialized.")

@@ -25,50 +25,6 @@ def _convert_bytes_to_int(byte_array):
     """
     return struct.unpack('<i', array.array('B', byte_array))[0]
 
-    def act_move(self, device, bytes):
-        log.log_info("Moving actuators in ??? direction (needs testing)")
-        self.__issue_command(
-            device,
-            22, bytes[0], bytes[1], bytes[2], bytes[3]
-        )
-        print "move"
-
-    def stop(self, device):
-        log.log_info("Stopping actuators")
-        self.__issue_command(
-            device,
-            23, 0, 0, 0, 0
-        )
-
-    def save_start_position(self):
-        """
-        Store current position in register 0,
-        to be used to return to in return_to_start_position
-        """
-        self.__issue_command(
-            self.__x_device,
-            16, 0, 0, 0, 0
-        )
-        self.__issue_command(
-            self.__y_device,
-            16, 0, 0, 0, 0
-        )
-
-    def return_to_start_position(self):
-        """
-        Returns to stored position in register 0 (previously saved start position),
-        set in save_start_position
-        """
-        self.__issue_command(
-            self.__x_device,
-            18, 0, 0, 0, 0
-        )
-
-        self.__issue_command(
-            self.__y_device,
-            18, 0, 0, 0, 0
-        )
-
 def _convert_int_to_bytes(i):
     """ Returns a bytearray (little endian) from a signed integer
 
@@ -1565,6 +1521,51 @@ class Actuators():
     ---------------------------------------------------- ICRA 2016 ------------------------------------------------------
     ---------------------------------------------------------------------------------------------------------------------
     """
+
+    def act_move(self, device, bytes):
+        log.log_info("Moving actuators in ??? direction (needs testing)")
+        self.__issue_command(
+            device,
+            22, bytes[0], bytes[1], bytes[2], bytes[3]
+        )
+        print "move"
+
+    def stop(self, device):
+        log.log_info("Stopping actuators")
+        self.__issue_command(
+            device,
+            23, 0, 0, 0, 0
+        )
+
+    def save_start_position(self):
+        """
+        Store current position in register 0,
+        to be used to return to in return_to_start_position
+        """
+        self.__issue_command(
+            self.__x_device,
+            16, 0, 0, 0, 0
+        )
+        self.__issue_command(
+            self.__y_device,
+            16, 0, 0, 0, 0
+        )
+
+    def return_to_start_position(self):
+        """
+        Returns to stored position in register 0 (previously saved start position),
+        set in save_start_position
+        """
+        self.__issue_command(
+            self.__x_device,
+            18, 0, 0, 0, 0
+        )
+
+        self.__issue_command(
+            self.__y_device,
+            18, 0, 0, 0, 0
+        )
+
     def diagonal_path(self, inverted_x_axis, inverted_y_axis):  # path_type, x_dir, y_dir, inverted_x_axis, inverted_y_axis):
         """
         For diagonal movement in the mobility challenge.
@@ -1605,7 +1606,7 @@ class Actuators():
         width_distance = 1200.0 + overshoot - 80  # 1250 is actual distance
 
         # Note this is not /quite/ accurate as we aren't actually tavelling at max_speed
-        
+
         diag_time = math.sqrt(
             math.pow(width_distance, 2) + math.pow(height_distance, 2)
             ) / self.__actuator_speed_to_actual_speed(max_speed+100)
@@ -1616,27 +1617,27 @@ class Actuators():
         ''' Start movement '''
         # TODO: Synchronize start and synchronize stop
         # Start moving diagonally
-        thread.start_new_thread(act_move, (self.__y_device, y_hypo))
-        thread.start_new_thread(act_move, (self.__x_device, x_hypo))
+        thread.start_new_thread(self.act_move, (self.__y_device, y_hypo))
+        thread.start_new_thread(self.act_move, (self.__x_device, x_hypo))
         time.sleep(diag_time)
 
         # Stops y and x movement of actuators
-        stop(self.__y_device)
-        stop(self.__x_device)
+        self.stop(self.__y_device)
+        self.stop(self.__x_device)
         ''' End of movement '''
 
         ''' Overshoot '''
         # Correct overshoot for the y axis
-        act_move(self.__y_device, y_down)
+        self.act_move(self.__y_device, y_down)
         time.sleep(self.getOvershootTime(triangle_y_max_speed))
-        stop(self.__y_device)
+        self.top(self.__y_device)
 
         # Correct overshoot for the x axis
-        act_move(self.__x_device, x_left)
+        self.act_move(self.__x_device, x_left)
         time.sleep(self.getOvershootTime(triangle_x_max_speed))
 
         # Stop overshoot
-        stop(self.__x_device)
+        self.stop(self.__x_device)
         time.sleep(act_delay)
         ''' End of overshoot '''
 

@@ -6,5 +6,4 @@ class Node():
 		self.__name = name
 		self.__adj_nodes = nodes
 
-		
-
+	# Generic movement functions

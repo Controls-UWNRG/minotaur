@@ -308,3 +308,29 @@ class Controller():
             Node("11", {"03", "15", "02", "31"}),
             Node("15", {"26", "11", "03", "35"})
         }
+
+    def log_actuator_init_error(self):
+        log.log_error("Actuators have not been initialized" \
+                          " with a com-port properly.")
+
+    ''' HIJACKED ICRA 2015 CODE!!!!!!! ACTUAL CODE IS COMMENTED OUT ABOVE '''
+    # This is the LARGE diagonal path
+    def triangle_path(self, inverted_x_axis, inverted_y_axis):
+        if self.__actuators:
+            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, "large")
+        else:
+            self.log_actuator_init_error()
+
+    # This is the SMALL diagonal path
+    def box_path(self, inverted_x_axis, inverted_y_axis):
+        if self.__actuators:
+            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, "small")
+        else:
+            self.log_actuator_init_error()
+
+    def circle_path(self, inverted_x_axis, inverted_y_axis):
+        if self.__actuators:
+            self.__actuators.circle_path(inverted_x_axis, inverted_y_axis)
+            #haven't implemented rotation yet
+        else:
+            self.log_actuator_init_error()

@@ -1566,13 +1566,13 @@ class Actuators():
             18, 0, 0, 0, 0
         )
 
-    def diagonal_path(self, inverted_x_axis, inverted_y_axis):  # path_type, x_dir, y_dir, inverted_x_axis, inverted_y_axis):
+    def diagonal_path(self, inverted_x_axis, inverted_y_axis, path_type):  # path_type, x_dir, y_dir, inverted_x_axis, inverted_y_axis):
         """
         For diagonal movement in the mobility challenge.
 
         Parameters:
-        inverted_y_axis = inversion of actuators for y axis
-        inverted_x_axis = inversion of actuators for x axis
+        (unused)inverted_y_axis = inversion of actuators for y axis
+        (unused)inverted_x_axis = inversion of actuators for x axis
         x_dir = direction string stating "up" or "down"
         y_dir = direction string stating "left" or "right"
         path_type = path type string stating "small" or "large" path (refer to competition field)
@@ -1583,6 +1583,7 @@ class Actuators():
 
         #limits the speeds so that the robot can use a constant speed in each direction
         max_speed = 420.0
+        act_overshoot = 300
 
         triangle_y_max_speed = 400.0
         triangle_x_max_speed = 275.0
@@ -1599,11 +1600,14 @@ class Actuators():
         #the delay for the first command to be processed
         act_delay = 0.50
 
-        #height of the field (from the center of one gate to the center of the one below)
-        height_distance = 2100.0 + overshoot  # 2000 is actual distance
-
-        #the width of the field (from the center of the left section to the center of the right)
-        width_distance = 1200.0 + overshoot - 80  # 1250 is actual distance
+        if(path_type == "large"):
+            #height of the field (from the center of one gate to the center of the one below)
+            height_distance = 2100.0 + act_overshoot  # 2000 is actual distance
+            #the width of the field (from the center of the left section to the center of the right)
+            width_distance = 1200.0 + act_overshoot - 80  # 1250 is actual distance
+        elif(path_type == "small"):
+            height_distance = 1000.0 + act_overshoot
+            width_distance = 500.0 + act_overshoot - 80
 
         # Note this is not /quite/ accurate as we aren't actually tavelling at max_speed
 
@@ -1630,7 +1634,7 @@ class Actuators():
         # Correct overshoot for the y axis
         self.act_move(self.__y_device, y_down)
         time.sleep(self.getOvershootTime(triangle_y_max_speed))
-        self.top(self.__y_device)
+        self.stop(self.__y_device)
 
         # Correct overshoot for the x axis
         self.act_move(self.__x_device, x_left)
@@ -1644,5 +1648,3 @@ class Actuators():
         # Return to stored start position
         #return_to_start_position()
         time.sleep(act_delay)
-
-

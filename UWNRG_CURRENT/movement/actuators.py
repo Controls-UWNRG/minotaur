@@ -25,6 +25,50 @@ def _convert_bytes_to_int(byte_array):
     """
     return struct.unpack('<i', array.array('B', byte_array))[0]
 
+    def act_move(self, device, bytes):
+        log.log_info("Moving actuators in ??? direction (needs testing)")
+        self.__issue_command(
+            device,
+            22, bytes[0], bytes[1], bytes[2], bytes[3]
+        )
+        print "move"
+
+    def stop(self, device):
+        log.log_info("Stopping actuators")
+        self.__issue_command(
+            device,
+            23, 0, 0, 0, 0
+        )
+
+    def save_start_position(self):
+        """
+        Store current position in register 0,
+        to be used to return to in return_to_start_position
+        """
+        self.__issue_command(
+            self.__x_device,
+            16, 0, 0, 0, 0
+        )
+        self.__issue_command(
+            self.__y_device,
+            16, 0, 0, 0, 0
+        )
+
+    def return_to_start_position(self):
+        """
+        Returns to stored position in register 0 (previously saved start position),
+        set in save_start_position
+        """
+        self.__issue_command(
+            self.__x_device,
+            18, 0, 0, 0, 0
+        )
+
+        self.__issue_command(
+            self.__y_device,
+            18, 0, 0, 0, 0
+        )
+
 def _convert_int_to_bytes(i):
     """ Returns a bytearray (little endian) from a signed integer
 
@@ -1580,7 +1624,7 @@ class Actuators():
             ) / self.__actuator_speed_to_actual_speed(max_speed+100)
 
         # Store current position in register 0
-        save_start_position()
+        #save_start_position()
 
         ''' Start movement '''
         # TODO: Synchronize start and synchronize stop
@@ -1610,49 +1654,7 @@ class Actuators():
         ''' End of overshoot '''
 
         # Return to stored start position
-        return_to_start_position()
+        #return_to_start_position()
         time.sleep(act_delay)
 
-    def act_move(self, device, bytes):
-        log.log_info("Moving actuators in ??? direction (needs testing)")
-        self.__issue_command(
-            device,
-            22, bytes[0], bytes[1], bytes[2], bytes[3]
-        )
-        print "move"
 
-    def stop(self, device):
-        log.log_info("Stopping actuators")
-        self.__issue_command(
-            device,
-            23, 0, 0, 0, 0
-        )
-
-    def save_start_position(self):
-        """
-        Store current position in register 0,
-        to be used to return to in return_to_start_position
-        """
-        self.__issue_command(
-            self.__x_device,
-            16, 0, 0, 0, 0
-        )
-        self.__issue_command(
-            self.__y_device,
-            16, 0, 0, 0, 0
-        )
-
-    def return_to_start_position(self):
-        """
-        Returns to stored position in register 0 (previously saved start position),
-        set in save_start_position
-        """
-        self.__issue_command(
-            self.__x_device,
-            18, 0, 0, 0, 0
-        )
-
-        self.__issue_command(
-            self.__y_device,
-            18, 0, 0, 0, 0
-        )

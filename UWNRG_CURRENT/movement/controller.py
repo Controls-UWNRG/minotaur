@@ -1,7 +1,7 @@
 import log as log
 import movement.actuators as actuators
 import movement.solenoids as solenoids
-import node.Node as node
+#import node.Node as node
 
 _EMMA_ACTUATORS = "EMMA_ACTUATORS"
 _EMMA_SOLENOIDS = "EMMA_SOLENOIDS"
@@ -53,7 +53,7 @@ class Controller():
             log.log_error("Actuators have not been initialized" \
                           " with a com-port properly.")
             
-    def figure_eight(self, inverted_x_axis, inverted_y_axis):
+    #def figure_eight(self, inverted_x_axis, inverted_y_axis):
 
     def get_available_com_ports(self):
         """ Returns a list of available com-ports """
@@ -236,7 +236,7 @@ class Controller():
         self.__control_schema = _EMMA_SOLENOIDS
         self.initialize_solenoids()
 
-"""----------------------------------ICRA 2016!!!---------------------------------"""
+    """----------------------------------ICRA 2016!!!---------------------------------"""
 
 
     def initialize_nodes(self):

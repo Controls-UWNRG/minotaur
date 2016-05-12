@@ -27,7 +27,7 @@ class Controller():
                     self.move_to_circle_start(inverted_x_axis, inverted_y_axis)
             for i in range(0, shape_count):
                 if shape_type == "circle":
-                    self.circle_path(inverted_x_axis, inverted_y_axis, 1, 0, 90)
+                    self.circle_path(inverted_x_axis, inverted_y_axis)
                 elif shape_type == "triangle":
                     self.triangle_path(inverted_x_axis, inverted_y_axis)
                 elif shape_type == "rectangle":
@@ -54,10 +54,10 @@ class Controller():
             log.log_error("Actuators have not been initialized" \
                           " with a com-port properly.")
 
-    def circle_path(self, inverted_x_axis, inverted_y_axis, radius, start, end):
+    def circle_path(self, inverted_x_axis, inverted_y_axis):
         if self.__actuators:
             self.__actuators.circle_path(inverted_x_axis,
-                                          inverted_y_axis, radius, start, end)
+                                          inverted_y_axis, 1, 0, 180)
         else:
             log.log_error("Actuators have not been initialized" \
                           " with a com-port properly.")

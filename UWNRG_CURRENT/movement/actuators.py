@@ -1521,17 +1521,6 @@ class Actuators():
     ---------------------------------------------------- ICRA 2016 ------------------------------------------------------
     ---------------------------------------------------------------------------------------------------------------------
     """
-
-    # path sizes
-    SMALL = "SMALL"
-    LARGE = "LARGE"
-
-    # directions
-    RIGHT = "RIGHT"
-    LEFT = "LEFT"
-    UP = "UP"
-    DOWN = "DOWN"
-
     def act_move(self, device, bytes):
         log.log_info("Moving actuators in ??? direction (needs testing)")
         self.__issue_command(
@@ -1612,26 +1601,28 @@ class Actuators():
         act_delay = 0.50
 
         ###### Choosing path direction ######
-        if(direction[0] == LEFT):
+        if(direction[0] == "LEFT"):
             # TODO
             print "do something left"
-        elif(direction[0] == RIGHT):
+        elif(direction[0] == "RIGHT"):
             # TODO
             print "do something right"
-        if(direction[1] == UP):
+        if(direction[1] == "UP"):
             # TODO
             print "do something up"
-        elif(direction[1] == DOWN):
+        elif(direction[1] == "DOWN"):
             # TODO
             print "do something down"
+        else:
+            log.log_error("Invalid path direction")
 
         ###### Choosing path size ######
-        if(path_size == LARGE):
+        if(path_size == "LARGE"):
             #height of the field (from the center of one gate to the center of the one below)
             height_distance = 2100.0 + act_overshoot  # 2000 is actual distance
             #the width of the field (from the center of the left section to the center of the right)
             width_distance = 1200.0 + act_overshoot - 80  # 1250 is actual distance
-        elif(path_size == SMALL):
+        elif(path_size == "SMALL"):
             height_distance = 1000.0 + act_overshoot
             width_distance = 500.0 + act_overshoot - 80
 
@@ -1679,8 +1670,8 @@ class Actuators():
         """
         inverted_x_axis = switches x axis direction
         inverted_y_axis = switches y axis direction
-        direction = direction string stating `LEFT`, `RIGHT`, `UP` or `DOWN`
-        (not used)path_type = string to specify length of type (i.e., `SMALL`, `LARGE`)
+        direction = direction string stating "LEFT", "RIGHT", "UP" or "DOWN"
+        (not used)path_type = string to specify length of type (i.e., "SMALL", "LARGE")
         """
 
         #limits the speeds so that the robot can use a constant speed in each direction
@@ -1707,12 +1698,15 @@ class Actuators():
         act_overshoot = 300
 
         # Check for path size
-        if(path_size == LARGE):
+        if(path_size == "LARGE"):
             height_distance = 1950.0 + act_overshoot
             width_distance = 3050.0 - 100 + act_overshoot
-        elif(path_size == SMALL):
+        elif(path_size == "SMALL"):
             height_distance = 975.0 + act_overshoot
             width_distance = 1525.0 - 100 + act_overshoot
+        else:
+            log.log_error("Invalid path size")
+            return
 
         #the time to lengths of the field
         x_time = width_distance / self.__actuator_speed_to_actual_speed(max_speed)
@@ -1723,52 +1717,50 @@ class Actuators():
         #######################
         ### MOVEMENT STARTS ###
         #######################
-        if(direction == LEFT):
+        if(direction == "LEFT"):
             # move LEFT
             self.act_move(self.__x_device, x_left)
             time.sleep(x_time)
-            self.stop()
+            self.stop(self.__x_device)
             # overshoot correction
             self.act_move(self.__x_device, x_right)
             time.sleep(overshoot_time)
-            self.stop()
+            self.stop(self.__x_device)
 
             time.sleep(act_delay)
 
-        elif(direction == DOWN):
+        elif(direction == "DOWN"):
             # move DOWN
             self.act_move(self.__y_device, y_down)
             time.sleep(y_time)
-            self.stop
+            self.stop(self.__y_device)
             # overshoot correction
             self.act_move(self.__y_device, y_up)
             time.sleep(overshoot_time)
-            self.stop()
+            self.stop(self.__y_device)
 
             time.sleep(act_delay)
 
-        elif(direction == RIGHT):
+        elif(direction == "RIGHT"):
             # move RIGHT
             self.act_move(self.__x_device, x_right)
             time.sleep(x_time)
-            self.stop()
+            self.stop(self.__x_device)
             # overshoot correction
             self.act_move(self.__x_device, x_left)
             time.sleep(overshoot_time)
-            self.stop()
+            self.stop(self.__x_device)
 
             time.sleep(act_delay)
 
-        elif(direction == UP)
+        elif(direction == "UP"):
             # move UP
             self.act_move(self.__y_device, y_up)
             time.sleep(y_time)
-            self.stop()
-            #???
-            time.sleep(true_delay)
+            self.stop(self.__y_device)
             # overshoot correction
             self.act_move(self.__y_device, y_down)
             time.sleep(overshoot_time)
-            self.stop()
+            self.stop(self.__y_device)
         else:
             log.log_error("Wrong path direction declared")

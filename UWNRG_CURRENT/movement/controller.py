@@ -27,7 +27,7 @@ class Controller():
                     self.move_to_circle_start(inverted_x_axis, inverted_y_axis)
             for i in range(0, shape_count):
                 if shape_type == "circle":
-                    self.circle_path(inverted_x_axis, inverted_y_axis)
+                    self.circle_path(inverted_x_axis, inverted_y_axis, 1, 0, 90)
                 elif shape_type == "triangle":
                     self.triangle_path(inverted_x_axis, inverted_y_axis)
                 elif shape_type == "rectangle":
@@ -54,10 +54,10 @@ class Controller():
             log.log_error("Actuators have not been initialized" \
                           " with a com-port properly.")
 
-    def circle_path(self, inverted_x_axis, inverted_y_axis):
+    def circle_path(self, inverted_x_axis, inverted_y_axis, radius, start, end):
         if self.__actuators:
             self.__actuators.circle_path(inverted_x_axis,
-                                          inverted_y_axis)
+                                          inverted_y_axis, radius, start, end)
         else:
             log.log_error("Actuators have not been initialized" \
                           " with a com-port properly.")
@@ -262,7 +262,55 @@ class Controller():
         self.__control_schema = _EMMA_SOLENOIDS
         self.initialize_solenoids()
 
-#----------------------------------ICRA 2016!!!---------------------------------
+    #----------------------------------ICRA 2016!!!---------------------------------
+
+    # def move_between_nodes(self, start_node, dest_node):
+	# 	if start_node.__name == "03":
+	# 		if dest_node.__name in start_node.__adj_nodes:
+	# 			if dest_node.__name == "02":
+	# 				# Go down 1 unit, go right 1 unit
+    #                 log.log_info("a")
+	# 			elif dest_node.__name == "26":
+	# 				# Go up 1 unit, go right 1 unit
+    #                 log.log_info("a")
+	# 			elif dest_node.__name == "11":
+	# 				# Circle(radius = 1, start = 180, end = 225)
+    #                 log.log_info("a")
+	# 			elif dest_node.__name == "15":
+	# 				# Circle(radius = 1, start = 180, end = 135)
+    #                 log.log_info("a")
+	# 			else:
+	# 				#invalid node
+    #                 log.log_info("Invalid node")
+	# 		else:
+	# 			#invalid node
+    #             log.log_info("Invalid node")
+    #
+	# 		return
+    #
+	# 	if start_node.__name == "11":
+	# 		if dest_node.__name in start_node.__adj_nodes:
+	# 			if dest_node.__name == "02":
+	# 				# Go down 1 unit, go right 1 unit
+    #                 log.log_info("a")
+	# 			elif dest_node.__name == "26":
+	# 				# Go up 1 unit, go right 1 unit
+    #                 log.log_info("a")
+	# 			elif dest_node.__name == "11":
+	# 				# Circle(radius = 1, start = 180, end = 225)
+    #                 log.log_info("a")
+	# 			elif dest_node.__name == "15":
+	# 				# Circle(radius = 1, start = 180, end = 135)
+    #                 log.log_info("a")
+	# 			else:
+	# 				#invalid node
+    #                 log.log_info("Invalid node")
+	# 		else:
+	# 			#invalid node
+    #             log.log_info("Invalid node")
+    #
+	# 		return
+
     def initialize_nodes(self):
         log.log_info("Nodes initialized.")
         nodes = {

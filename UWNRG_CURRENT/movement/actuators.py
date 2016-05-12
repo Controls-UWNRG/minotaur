@@ -11,7 +11,7 @@ DEFAULT_SPEED = 100
 overshoot = 300
 
 def getOvershootTime(self, max_speed):
-    return overshoot / self.__actuator_speed_to_actual_speed(max_speed)  
+    return overshoot / self.__actuator_speed_to_actual_speed(max_speed)
 
 def get_default_speed():
     return DEFAULT_SPEED #do better
@@ -333,9 +333,9 @@ class Actuators():
                              0)
         log.log_info("Maze navigated!")
 
-    
+
     def getOvershootTime(self, max_speed):
-        return overshoot / self.__actuator_speed_to_actual_speed(max_speed)  
+        return overshoot / self.__actuator_speed_to_actual_speed(max_speed)
 
 
     def move_to_circle_start(self, inverted_x_axis, inverted_y_axis):
@@ -437,7 +437,7 @@ class Actuators():
                              x_left[2],
                              x_left[3])
         time.sleep(self.getOvershootTime(x_max_speed))
-        
+
         # Stop the overshoot
         self.__issue_command(self.__x_device,
                              23,
@@ -450,42 +450,29 @@ class Actuators():
         time.sleep(true_delay)
 
 
-    def circle_path(self, inverted_x_axis, inverted_y_axis):
-        '''This function should cause the robot to travel in a circle. It uses derivatives to determine speed. 
+    def circle_path(self, inverted_x_axis, inverted_y_axis, radius, start, end):
+        '''This function should cause the robot to travel in a circle. It uses derivatives to determine speed.
         I have no idea if it will work (Not sure what I am doing with the actuators is sound). If that works
         you will have to play around with the constants.
         If the actuator command code fails, we will need to add more sleeps between each call and decrease the delay and
         decrease the angle increment.'''
-        
-        radius = 2000.0
+
+        radius = radius * 2000.0
         x_multiplier = 0.13
         y_multiplier = 0.41
-        angle = 90.0
+        angle = start
         delay = 0.0001
-        total_time = 0.0075
-        angle_increment = 5
         current_time = 0
+        total_time = (end - start) * 0.0075 / 360
+        angle_increment = 5
 
-        # Store current position in register 0
-        self.__issue_command(
-            self.__x_device,
-            16,
-            0,
-            0,
-            0,
-            0,
-        )
-        self.__issue_command(
-            self.__y_device,
-            16,
-            0,
-            0,
-            0,
-            0,
-        )
+        #handle CW paths
+        if total_time < 0:
+            total_time = -1 * total_time
+            angle_increment = -5
 
         def get_new_x_speed(theta):
-            return (-1)*radius*math.sin(math.radians(theta))  
+            return (-1)*radius*math.sin(math.radians(theta))
 
         def get_new_y_speed(theta):
             return radius*math.cos(math.radians(theta))
@@ -547,23 +534,6 @@ class Actuators():
             angle = angle + angle_increment
             current_time = current_time + delay
 
-        # Return to stored position in register 0 (starting position)
-        self.__issue_command(
-            self.__x_device,
-            18,
-            0,
-            0,
-            0,
-            0,
-        )
-        self.__issue_command(
-            self.__y_device,
-            18,
-            0,
-            0,
-            0,
-            0,
-        )
 
 
     def triangle_path(self, inverted_x_axis, inverted_y_axis):

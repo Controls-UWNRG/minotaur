@@ -18,14 +18,25 @@ class Controller():
             log.log_error("Actuators have not been initialized" \
                           " with a com-port properly.")
 
-    #NOT SURE IF NEEDED
-    '''def follow_path(self, path_x, path_y, inverted_x_axis, inverted_y_axis):    #currently only moves accurators
-        if self.__actuators:
-            self.__actuators.follow_path(inverted_x_axis, inverted_y_axis)
-        else:
-            log.log_error("Actuators have not been initialized" \
-                          "with a com-port properly")
-    '''
+    def draw_shapes(self, inverted_x_axis, inverted_y_axis, shape_info):
+    for shape in shape_info:
+        shape_type = shape["shape"]
+        shape_count = shape["count"]
+        if shape_type == "circle":
+            if (shape_count > 0):
+                self.move_to_circle_start(inverted_x_axis, inverted_y_axis)
+        for i in range(0, shape_count):
+            if shape_type == "circle":
+                self.circle_path(inverted_x_axis, inverted_y_axis)
+            elif shape_type == "triangle":
+                self.triangle_path(inverted_x_axis, inverted_y_axis)
+            elif shape_type == "rectangle":
+                self.box_path(inverted_x_axis, inverted_y_axis)
+        if shape_type == "circle":
+            if (shape_count > 0):
+                self.move_to_top_right(inverted_x_axis, inverted_y_axis)
+
+
     # def box_path(self, inverted_x_axis, inverted_y_axis):
     #     if self.__actuators:
     #         self.__actuators.box_path(inverted_x_axis,
@@ -51,7 +62,25 @@ class Controller():
     #     else:
     #         log.log_error("Actuators have not been initialized" \
     #                       " with a com-port properly.")
-    #def figure_eight(self, inverted_x_axis, inverted_y_axis):
+    
+    def move_to_circle_start(self, inverted_x_axis, inverted_y_axis):
+        if self.__actuators:
+            self.__actuators.move_to_circle_start(inverted_x_axis,
+                                          inverted_y_axis)
+        else:
+            log.log_error("Actuators have not been initialized" \
+                          " with a com-port properly.")
+
+    def move_to_top_right(self, inverted_x_axis, inverted_y_axis):
+        if self.__actuators:
+            self.__actuators.move_to_top_right(inverted_x_axis,
+                                          inverted_y_axis)
+        else:
+            log.log_error("Actuators have not been initialized" \
+                          " with a com-port properly.")
+
+    def figure_eight(self, inverted_x_axis, inverted_y_axis):
+        log.log_error("No figure eight")
 
     def get_available_com_ports(self):
         """ Returns a list of available com-ports """
@@ -291,8 +320,8 @@ class Controller():
         }
 
     def log_actuator_init_error(self):
-        log.log_error("Actuators have not been initialized" \
-                          " with a com-port properly.")
+        log.log_error("Actuators have not been initialized"
+                      " with a com-port properly.")
 
     ''' HIJACKED ICRA 2015 CODE!!!!!!! ACTUAL CODE IS COMMENTED OUT ABOVE '''
     # This is the LARGE diagonal path
@@ -311,7 +340,7 @@ class Controller():
 
     def circle_path(self, inverted_x_axis, inverted_y_axis):
         if self.__actuators:
-            self.__actuators.circle_path(inverted_x_axis, inverted_y_axis)
-            #haven't implemented rotation yet
+            self.__actuators.circle_path(inverted_x_axis,
+                                         inverted_y_axis, 1, 0, 180)
         else:
             self.log_actuator_init_error()

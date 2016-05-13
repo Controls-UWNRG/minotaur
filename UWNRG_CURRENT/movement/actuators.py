@@ -531,24 +531,6 @@ class Actuators():
             angle = angle + angle_increment
             current_time = current_time + delay
 
-        # Return to stored position in register 0 (starting position)
-        self.__issue_command(
-            self.__x_device,
-            18,
-            0,
-            0,
-            0,
-            0,
-        )
-        self.__issue_command(
-            self.__y_device,
-            18,
-            0,
-            0,
-            0,
-            0,
-        )
-
     def triangle_path(self, inverted_x_axis, inverted_y_axis):
         """ TODO: Need to overshoot target corners, then pull back before making the next move """
         #height: 2mm or 2000+-20um

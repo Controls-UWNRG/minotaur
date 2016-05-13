@@ -268,7 +268,8 @@ class MainWindow:
         used_order = [False] * node_num
 
         for node in range(0, node_num):
-            order = self.__builder.get_object("order_node" + node).get_text()
+            order_object = self.__builder.get_object("order_node" + node)
+            order = order_object.get_text()
             if (not order.isdigit()):
                 log.log_error("Order must be numbers")
             elif int(order) <= 0:
@@ -281,7 +282,8 @@ class MainWindow:
                     return
 
                 used_order[index] = True
-                path_info[index] = "node" + node+1
+                print node+1
+                path_info[index] = "node" + str(node+1)
         self.__close_pick_path_window(button)
 
         # facade.draw_path(self.__x_axis_inverted, self.__y_axis_inverted, path_info)

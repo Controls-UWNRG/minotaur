@@ -263,7 +263,35 @@ class Controller():
         self.__control_schema = _EMMA_SOLENOIDS
         self.initialize_solenoids()
 
-    """----------------------------------ICRA 2016!!!---------------------------------"""
+    """
+    ---------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------- ICRA 2016 ------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------
+    """
+    def node_dictionary(name):
+        return {
+            "node1": "03",
+            "node2": "11",
+            "node3": "15",
+            "node4": "20",
+            "node5": "26",
+            "node6": "31",
+            "node7": "35",
+            "node8": "40",
+            "node9": "43",
+            "node10": "46",
+            "node11": "52",
+            "node12": "64",
+            "node13": "73",
+            "node14": "76"
+        }[name]
+
+    def draw_path(self, inverted_x_axis, inverted_y_axis, path_info):
+        nodes = []
+        for i in range(len(path_info)):
+            nodes.append(node_dictionary(path_info[i]))
+        get_path(self, inverted_x_axis, inverted_y_axis, nodes)
+
     def get_path(self, inverted_x_axis, inverted_y_axis, nodes):
         for i in range(len(nodes) - 1):
             self.move_between_nodes(inverted_x_axis, inverted_y_axis, nodes[i], nodes[i+1])

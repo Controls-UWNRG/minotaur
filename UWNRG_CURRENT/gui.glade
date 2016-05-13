@@ -48,6 +48,17 @@ William Zou
       </object>
     </child>
   </object>
+  <object class="GtkListStore" id="com_port_liststore">
+    <columns>
+      <!-- column-name com-port -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">problem with clearing liststore if you can see this</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkDialog" id="actuator_setup_window">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -135,7 +146,6 @@ com-port:</property>
         <child>
           <object class="GtkCheckButton" id="switch_actuator_axis">
             <property name="label" translatable="yes">Switch Actuator Axes Upon 'OK'</property>
-            <property name="use_action_appearance">False</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
@@ -158,7 +168,6 @@ com-port:</property>
             <child>
               <object class="GtkButton" id="close_help_button1">
                 <property name="label" translatable="yes">OK</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -183,17 +192,6 @@ com-port:</property>
       <action-widget response="0">close_help_button1</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkListStore" id="com_port_liststore">
-    <columns>
-      <!-- column-name com-port -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">problem with clearing liststore if you can see this</col>
-      </row>
-    </data>
-  </object>
   <object class="GtkDialog" id="help_window">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -214,7 +212,6 @@ com-port:</property>
             <child>
               <object class="GtkButton" id="close_help_button">
                 <property name="label" translatable="yes">OK</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -371,7 +368,6 @@ com-port:</property>
         <child>
           <object class="GtkButton" id="saveIRSettings">
             <property name="label" translatable="yes">Save Settings</property>
-            <property name="use_action_appearance">False</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
@@ -490,7 +486,6 @@ com-port:</property>
             <child>
               <object class="GtkButton" id="browse_image">
                 <property name="label" translatable="yes">Browse For Image...</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -505,7 +500,6 @@ com-port:</property>
             <child>
               <object class="GtkButton" id="refresh_ir_cam_image">
                 <property name="label" translatable="yes">Refresh Camera Image</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -571,7 +565,6 @@ com-port:</property>
             <property name="can_focus">False</property>
             <child>
               <object class="GtkMenuItem" id="setup_menu">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Setup</property>
@@ -582,7 +575,6 @@ com-port:</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkRadioMenuItem" id="emma_mode_actuator_radio">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">EMMA Actuator Mode</property>
@@ -594,7 +586,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkRadioMenuItem" id="emma_mode_solenoid_radio">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">EMMA Solenoid Mode</property>
@@ -612,7 +603,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="setup_menu_actuators">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Actuators</property>
@@ -628,7 +618,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="setup_menu_exit">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Exit</property>
@@ -642,7 +631,6 @@ com-port:</property>
             </child>
             <child>
               <object class="GtkMenuItem" id="video_menu">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Video</property>
@@ -653,7 +641,6 @@ com-port:</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkCheckMenuItem" id="video_menu_micro_cam">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Microscopic Camera View</property>
@@ -663,7 +650,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkCheckMenuItem" id="video_menu_web_cam">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">WebCam View</property>
@@ -677,7 +663,6 @@ com-port:</property>
             </child>
             <child>
               <object class="GtkMenuItem" id="edit_menu">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Edit</property>
@@ -688,7 +673,6 @@ com-port:</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkCheckMenuItem" id="edit_menu_invert_x_axis">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Invert X-Axis</property>
@@ -698,7 +682,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkCheckMenuItem" id="edit_menu_invert_y_axis">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Invert Y-Axis</property>
@@ -714,7 +697,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="edit_menu_clear_log">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Clear Log</property>
@@ -728,7 +710,6 @@ com-port:</property>
             </child>
             <child>
               <object class="GtkMenuItem" id="tools_menu">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Tools</property>
@@ -739,17 +720,14 @@ com-port:</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkMenuItem" id="figure_eight">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Figure Eight</property>
-                        <property name="use_underline">True</property>
                         <signal name="activate" handler="on_figure_eight_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="box_path">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Box Manoeuvre</property>
@@ -758,7 +736,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="triangle_path">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Triangle Manoeuvre</property>
@@ -769,7 +746,6 @@ com-port:</property>
                       <object class="GtkMenuItem" id="move_to_circle_start">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Move to Circle Start</property>
                         <signal name="activate" handler="on_move_to_circle_start_activate" swapped="no"/>
                       </object>
@@ -778,14 +754,12 @@ com-port:</property>
                       <object class="GtkMenuItem" id="move_to_top_right">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Move from Circle Start To Origin</property>
                         <signal name="activate" handler="on_move_to_top_right_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="circle_path">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Circle Manoeuvre</property>
@@ -794,7 +768,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="shape_list">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Pick Shapes</property>
@@ -803,7 +776,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="navigate_maze">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Navigate Maze</property>
@@ -819,7 +791,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkCheckMenuItem" id="tools_menu_manual_keyboard_input">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Manual Keyboard Input</property>
@@ -836,7 +807,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="ir_preview">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Preview Image Recognition</property>
@@ -845,7 +815,6 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="tools_menu_video_camera">
-                        <property name="use_action_appearance">False</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Video Camera</property>
                         <property name="use_underline">True</property>
@@ -858,7 +827,6 @@ com-port:</property>
             </child>
             <child>
               <object class="GtkMenuItem" id="help_menu">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Help</property>
@@ -869,7 +837,6 @@ com-port:</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkMenuItem" id="help_menu_help">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Help</property>
@@ -879,12 +846,31 @@ com-port:</property>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="help_menu_about">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">About</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="on_help_menu_about_activate" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="icra_2016_menu">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">ICRA 2016</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="setup_menu_dropdown1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="choose_move_path">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Choose Path</property>
                       </object>
                     </child>
                   </object>
@@ -906,6 +892,52 @@ com-port:</property>
               <object class="GtkVBox" id="vertical_right_controls">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkVBox" id="vertical_log">
+                    <property name="width_request">400</property>
+                    <property name="height_request">250</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkLabel" id="vertical_log_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Log</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow" id="vertical_log_scroll_window">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="hscrollbar_policy">automatic</property>
+                        <child>
+                          <object class="GtkTextView" id="vertical_log_scroll_window_text_view">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="editable">False</property>
+                            <property name="wrap_mode">word</property>
+                            <property name="cursor_visible">False</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
                 <child>
                   <object class="GtkHBox" id="arrow_box">
                     <property name="width_request">200</property>
@@ -967,52 +999,6 @@ com-port:</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkVBox" id="vertical_log">
-                    <property name="width_request">400</property>
-                    <property name="height_request">250</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkLabel" id="vertical_log_label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Log</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkScrolledWindow" id="vertical_log_scroll_window">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">automatic</property>
-                        <child>
-                          <object class="GtkTextView" id="vertical_log_scroll_window_text_view">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="editable">False</property>
-                            <property name="wrap_mode">word</property>
-                            <property name="cursor_visible">False</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
@@ -1086,7 +1072,6 @@ com-port:</property>
                     <child>
                       <object class="GtkButton" id="manual_control_enter_button">
                         <property name="label" translatable="yes">Enter Instruction</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -1234,7 +1219,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate1_top">
                 <property name="label" translatable="yes">top</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1249,7 +1233,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate1_mid">
                 <property name="label" translatable="yes">mid</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1265,7 +1248,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate1_bot">
                 <property name="label" translatable="yes">bot</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1281,7 +1263,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate2_top">
                 <property name="label" translatable="yes">top</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1298,7 +1279,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate3_top">
                 <property name="label" translatable="yes">top</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1315,7 +1295,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate4_top">
                 <property name="label" translatable="yes">top</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1332,7 +1311,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate5_top">
                 <property name="label" translatable="yes">top</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1349,7 +1327,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate6_top">
                 <property name="label" translatable="yes">top</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1366,7 +1343,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate2_mid">
                 <property name="label" translatable="yes">mid</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1384,7 +1360,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate3_mid">
                 <property name="label" translatable="yes">mid</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1402,7 +1377,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate4_mid">
                 <property name="label" translatable="yes">mid</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1420,7 +1394,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate5_mid">
                 <property name="label" translatable="yes">mid</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1438,7 +1411,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate6_mid">
                 <property name="label" translatable="yes">mid</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1456,7 +1428,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate2_bot">
                 <property name="label" translatable="yes">bot</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1474,7 +1445,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate3_bot">
                 <property name="label" translatable="yes">bot</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1492,7 +1462,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate4_bot">
                 <property name="label" translatable="yes">bot</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1510,7 +1479,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate5_bot">
                 <property name="label" translatable="yes">bot</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1528,7 +1496,6 @@ com-port:</property>
             <child>
               <object class="GtkRadioButton" id="gate6_bot">
                 <property name="label" translatable="yes">bot</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -1558,7 +1525,6 @@ com-port:</property>
             <child>
               <object class="GtkButton" id="refresh_image">
                 <property name="label" translatable="yes">Refresh Image</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -1573,7 +1539,6 @@ com-port:</property>
             <child>
               <object class="GtkButton" id="close_maze_window_button">
                 <property name="label" translatable="yes">OK</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -1595,6 +1560,283 @@ com-port:</property>
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkDialog" id="pick_path_window">
+    <property name="can_focus">False</property>
+    <property name="border_width">5</property>
+    <property name="type_hint">normal</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox9">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkLabel" id="shapes_label1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Select the node order to go in, starting with the one the robot is on.</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="hbox2">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label13">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Count</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label14">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Order</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area9">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="shape_ok1">
+                <property name="label" translatable="yes">OK</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="shape_cancel1">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="yalign">0.49000000953674316</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="hbox7">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkLabel" id="node_1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Triangles</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="node1_count1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">●</property>
+                <property name="invisible_char_set">True</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">True</property>
+                <property name="secondary_icon_sensitive">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="node1_order1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">●</property>
+                <property name="invisible_char_set">True</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">True</property>
+                <property name="secondary_icon_sensitive">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="hbox8">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkLabel" id="node_2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Circles</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="node2_count1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">●</property>
+                <property name="invisible_char_set">True</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">True</property>
+                <property name="secondary_icon_sensitive">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="node2_order1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">●</property>
+                <property name="invisible_char_set">True</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">True</property>
+                <property name="secondary_icon_sensitive">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="hbox9">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkLabel" id="node_3">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Rectangles</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="node_3_count1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">●</property>
+                <property name="invisible_char_set">True</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">True</property>
+                <property name="secondary_icon_sensitive">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="node_3_order1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">●</property>
+                <property name="invisible_char_set">True</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">True</property>
+                <property name="secondary_icon_sensitive">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">shape_ok1</action-widget>
+      <action-widget response="-3">shape_cancel1</action-widget>
+    </action-widgets>
   </object>
   <object class="GtkDialog" id="pick_shape_window">
     <property name="can_focus">False</property>
@@ -1663,7 +1905,6 @@ com-port:</property>
             <child>
               <object class="GtkButton" id="shape_ok">
                 <property name="label" translatable="yes">OK</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -1678,7 +1919,6 @@ com-port:</property>
             <child>
               <object class="GtkButton" id="shape_cancel">
                 <property name="label" translatable="yes">Cancel</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>

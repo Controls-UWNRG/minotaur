@@ -262,27 +262,26 @@ class MainWindow:
 
     # TODO: get proper data from the GUI
     def __set_node_path(self, button):
-        print "setting node path!"
-        log.log_info("setting node path????")
-        # node_num = 14
-        # path_info = [None] * node_num
-        # used_order = [False] * node_num
+        log.log_info("Setting node path")
+        node_num = 14
+        path_info = [None] * node_num
+        used_order = [False] * node_num
 
-        # for node in node_num:
-        #     order = self.__builder.get_object("node" + node + "_order").get_text()
-        #     if (not order.isdigit()):
-        #         log.log_error("Order must be numbers")
-        #     elif int(order) <= 0:
-        #         # node not used
-        #         continue
-        #     else:
-        #         index = int(order)-1
-        #         if used_order[index]:
-        #             log.log_error("Duplicate order number {0}".format(index+1))
-        #             return
+        for node in range(0, node_num):
+            order = self.__builder.get_object("order_node" + node).get_text()
+            if (not order.isdigit()):
+                log.log_error("Order must be numbers")
+            elif int(order) <= 0:
+                # node not used
+                continue
+            else:
+                index = int(order)-1
+                if used_order[index]:
+                    log.log_error("Duplicate order number {0}".format(index+1))
+                    return
 
-        #         used_order[index] = True
-        #         path_info[index]["name"] = "node" + node
+                used_order[index] = True
+                path_info[index] = "node" + node+1
         self.__close_pick_path_window(button)
 
         # facade.draw_path(self.__x_axis_inverted, self.__y_axis_inverted, path_info)

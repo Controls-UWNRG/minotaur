@@ -19,49 +19,50 @@ class Controller():
                           " with a com-port properly.")
 
     def draw_shapes(self, inverted_x_axis, inverted_y_axis, shape_info):
-        for shape in shape_info:
-            shape_type = shape["shape"]
-            shape_count = shape["count"]
+    for shape in shape_info:
+        shape_type = shape["shape"]
+        shape_count = shape["count"]
+        if shape_type == "circle":
+            if (shape_count > 0):
+                self.move_to_circle_start(inverted_x_axis, inverted_y_axis)
+        for i in range(0, shape_count):
             if shape_type == "circle":
-                if (shape_count > 0):
-                    self.move_to_circle_start(inverted_x_axis, inverted_y_axis)
-            for i in range(0, shape_count):
-                if shape_type == "circle":
-                    self.circle_path(inverted_x_axis, inverted_y_axis)
-                elif shape_type == "triangle":
-                    self.triangle_path(inverted_x_axis, inverted_y_axis)
-                elif shape_type == "rectangle":
-                    self.box_path(inverted_x_axis, inverted_y_axis)
-            if shape_type == "circle":
-                if (shape_count > 0):
-                    self.move_to_top_right(inverted_x_axis, inverted_y_axis)
+                self.circle_path(inverted_x_axis, inverted_y_axis)
+            elif shape_type == "triangle":
+                self.triangle_path(inverted_x_axis, inverted_y_axis)
+            elif shape_type == "rectangle":
+                self.box_path(inverted_x_axis, inverted_y_axis)
+        if shape_type == "circle":
+            if (shape_count > 0):
+                self.move_to_top_right(inverted_x_axis, inverted_y_axis)
 
-    def box_path(self, inverted_x_axis, inverted_y_axis):
-        if self.__actuators:
-            self.__actuators.box_path(inverted_x_axis,
-                                          inverted_y_axis)
-            #haven't implemented rotation yet
-        else:
-            log.log_error("Actuators have not been initialized" \
-                          " with a com-port properly.")
 
-    def triangle_path(self, inverted_x_axis, inverted_y_axis):
-        if self.__actuators:
-            self.__actuators.triangle_path(inverted_x_axis,
-                                          inverted_y_axis)
-            #haven't implemented rotation yet
-        else:
-            log.log_error("Actuators have not been initialized" \
-                          " with a com-port properly.")
+    # def box_path(self, inverted_x_axis, inverted_y_axis):
+    #     if self.__actuators:
+    #         self.__actuators.box_path(inverted_x_axis,
+    #                                       inverted_y_axis)
+    #         #haven't implemented rotation yet
+    #     else:
+    #         log.log_error("Actuators have not been initialized" \
+    #                       " with a com-port properly.")
 
-    def circle_path(self, inverted_x_axis, inverted_y_axis):
-        if self.__actuators:
-            self.__actuators.circle_path(inverted_x_axis,
-                                          inverted_y_axis, 1, 0, 180)
-        else:
-            log.log_error("Actuators have not been initialized" \
-                          " with a com-port properly.")
+    # def triangle_path(self, inverted_x_axis, inverted_y_axis):
+    #     if self.__actuators:
+    #         self.__actuators.triangle_path(inverted_x_axis, inverted_y_axis)
+    #         #haven't implemented rotation yet
+    #     else:
+    #         log.log_error("Actuators have not been initialized" \
+    #                       " with a com-port properly.")
 
+    # def circle_path(self, inverted_x_axis, inverted_y_axis):
+    #     if self.__actuators:
+    #         self.__actuators.circle_path(inverted_x_axis,
+    #                                       inverted_y_axis)
+    #         #haven't implemented rotation yet
+    #     else:
+    #         log.log_error("Actuators have not been initialized" \
+    #                       " with a com-port properly.")
+    
     def move_to_circle_start(self, inverted_x_axis, inverted_y_axis):
         if self.__actuators:
             self.__actuators.move_to_circle_start(inverted_x_axis,
@@ -262,54 +263,53 @@ class Controller():
         self.__control_schema = _EMMA_SOLENOIDS
         self.initialize_solenoids()
 
-    #----------------------------------ICRA 2016!!!---------------------------------
-
+    """----------------------------------ICRA 2016!!!---------------------------------"""
     # def move_between_nodes(self, start_node, dest_node):
-	# 	if start_node.__name == "03":
-	# 		if dest_node.__name in start_node.__adj_nodes:
-	# 			if dest_node.__name == "02":
-	# 				# Go down 1 unit, go right 1 unit
+    #     if start_node.__name == "03":
+    #         if dest_node.__name in start_node.__adj_nodes:
+    #             if dest_node.__name == "02":
+    #                 # Go down 1 unit, go right 1 unit
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "26":
-	# 				# Go up 1 unit, go right 1 unit
+    #             elif dest_node.__name == "26":
+    #                 # Go up 1 unit, go right 1 unit
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "11":
-	# 				# Circle(radius = 1, start = 180, end = 225)
+    #             elif dest_node.__name == "11":
+    #                 # Circle(radius = 1, start = 180, end = 225)
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "15":
-	# 				# Circle(radius = 1, start = 180, end = 135)
+    #             elif dest_node.__name == "15":
+    #                 # Circle(radius = 1, start = 180, end = 135)
     #                 log.log_info("a")
-	# 			else:
-	# 				#invalid node
+    #             else:
+    #                 #invalid node
     #                 log.log_info("Invalid node")
-	# 		else:
-	# 			#invalid node
+    #         else:
+    #             #invalid node
     #             log.log_info("Invalid node")
     #
-	# 		return
+    #         return
     #
-	# 	if start_node.__name == "11":
-	# 		if dest_node.__name in start_node.__adj_nodes:
-	# 			if dest_node.__name == "02":
-	# 				# Go down 1 unit, go right 1 unit
+    #     if start_node.__name == "11":
+    #         if dest_node.__name in start_node.__adj_nodes:
+    #             if dest_node.__name == "02":
+    #                 # Go down 1 unit, go right 1 unit
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "26":
-	# 				# Go up 1 unit, go right 1 unit
+    #             elif dest_node.__name == "26":
+    #                 # Go up 1 unit, go right 1 unit
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "11":
-	# 				# Circle(radius = 1, start = 180, end = 225)
+    #             elif dest_node.__name == "11":
+    #                 # Circle(radius = 1, start = 180, end = 225)
     #                 log.log_info("a")
-	# 			elif dest_node.__name == "15":
-	# 				# Circle(radius = 1, start = 180, end = 135)
+    #             elif dest_node.__name == "15":
+    #                 # Circle(radius = 1, start = 180, end = 135)
     #                 log.log_info("a")
-	# 			else:
-	# 				#invalid node
+    #             else:
+    #                 #invalid node
     #                 log.log_info("Invalid node")
-	# 		else:
-	# 			#invalid node
+    #         else:
+    #             #invalid node
     #             log.log_info("Invalid node")
     #
-	# 		return
+    #         return
 
     def initialize_nodes(self):
         log.log_info("Nodes initialized.")
@@ -318,3 +318,29 @@ class Controller():
             Node("11", {"03", "15", "02", "31"}),
             Node("15", {"26", "11", "03", "35"})
         }
+
+    def log_actuator_init_error(self):
+        log.log_error("Actuators have not been initialized"
+                      " with a com-port properly.")
+
+    ''' HIJACKED ICRA 2015 CODE!!!!!!! ACTUAL CODE IS COMMENTED OUT ABOVE '''
+    # This is the LARGE diagonal path
+    def triangle_path(self, inverted_x_axis, inverted_y_axis):
+        if self.__actuators:
+            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, ["DOWN", "LEFT"], "LARGE")
+        else:
+            self.log_actuator_init_error()
+
+    # This is the straight path
+    def box_path(self, inverted_x_axis, inverted_y_axis):
+        if self.__actuators:
+            self.__actuators.straight_path(inverted_x_axis, inverted_y_axis, "DOWN", "LARGE")
+        else:
+            self.log_actuator_init_error()
+
+    def circle_path(self, inverted_x_axis, inverted_y_axis):
+        if self.__actuators:
+            self.__actuators.circle_path(inverted_x_axis,
+                                         inverted_y_axis, 1, 0, 180)
+        else:
+            self.log_actuator_init_error()

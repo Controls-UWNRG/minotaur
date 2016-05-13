@@ -333,10 +333,8 @@ class Actuators():
                              0)
         log.log_info("Maze navigated!")
 
-
     def getOvershootTime(self, max_speed):
         return overshoot / self.__actuator_speed_to_actual_speed(max_speed)
-
 
     def move_to_circle_start(self, inverted_x_axis, inverted_y_axis):
         """ Move from top-right corner to the start of the circle path """
@@ -449,7 +447,6 @@ class Actuators():
 
         time.sleep(true_delay)
 
-
     def circle_path(self, inverted_x_axis, inverted_y_axis, radius, start, end):
         '''This function should cause the robot to travel in a circle. It uses derivatives to determine speed.
         I have no idea if it will work (Not sure what I am doing with the actuators is sound). If that works
@@ -533,8 +530,6 @@ class Actuators():
 
             angle = angle + angle_increment
             current_time = current_time + delay
-
-
 
     def triangle_path(self, inverted_x_axis, inverted_y_axis):
         """ TODO: Need to overshoot target corners, then pull back before making the next move """
@@ -1502,3 +1497,252 @@ class Actuators():
         temp = self.__y_device
         self.__y_device = self.__x_device
         self.__x_device = temp
+
+    """
+    ---------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------- ICRA 2016 ------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------
+    """
+    def act_move(self, device, bytes):
+        log.log_info("Moving actuators in ??? direction (needs testing)")
+        self.__issue_command(
+            device,
+            22, bytes[0], bytes[1], bytes[2], bytes[3]
+        )
+        print "move"
+
+    def stop(self, device):
+        log.log_info("Stopping actuators")
+        self.__issue_command(
+            device,
+            23, 0, 0, 0, 0
+        )
+
+    def save_start_position(self):
+        """
+        Store current position in register 0,
+        to be used to return to in return_to_start_position
+        """
+        self.__issue_command(
+            self.__x_device,
+            16, 0, 0, 0, 0
+        )
+        self.__issue_command(
+            self.__y_device,
+            16, 0, 0, 0, 0
+        )
+
+    def return_to_start_position(self):
+        """
+        Returns to stored position in register 0 (previously saved start position),
+        set in save_start_position
+        """
+        self.__issue_command(
+            self.__x_device,
+            18, 0, 0, 0, 0
+        )
+
+        self.__issue_command(
+            self.__y_device,
+            18, 0, 0, 0, 0
+        )
+
+    def diagonal_path(self, inverted_x_axis, inverted_y_axis, direction, path_size):  # path_type, x_dir, y_dir, inverted_x_axis, inverted_y_axis):
+        """
+        For diagonal movement in the mobility challenge.
+
+        Parameters:
+        (unused)inverted_y_axis = inversion of actuators for y axis
+        (unused)inverted_x_axis = inversion of actuators for x axis
+        direction = direction array stating [x_dir, y_dir]
+        -- where x_dir is `LEFT` or `RIGHT`
+        -- where y_dir is `UP` or `DOWN`
+        path_size = path type string stating "small" or "large" path (refer to competition field)
+        """
+
+        #height: 2mm or 2000+-20um
+        #length: 1.25mm or 1250+-20um
+
+        #limits the speeds so that the robot can use a constant speed in each direction
+        max_speed = 400.0
+        act_overshoot = 300
+
+        triangle_y_max_speed = 400.0
+        triangle_x_max_speed = 275.0
+
+        #stores the movements for the specified directions
+        x_left = _convert_int_to_bytes(-max_speed)
+        x_right = _convert_int_to_bytes(max_speed)  # not used
+        y_down = _convert_int_to_bytes(-max_speed)
+        y_up = _convert_int_to_bytes(max_speed)  # not used
+
+        x_hypo = _convert_int_to_bytes(triangle_x_max_speed)
+        y_hypo = _convert_int_to_bytes(triangle_y_max_speed)
+
+        #the delay for the first command to be processed
+        act_delay = 0.50
+
+        ###### Choosing path direction ######
+        if(direction[0] == "LEFT"):
+            # TODO
+            print "do something left"
+        elif(direction[0] == "RIGHT"):
+            # TODO
+            print "do something right"
+        if(direction[1] == "UP"):
+            # TODO
+            print "do something up"
+        elif(direction[1] == "DOWN"):
+            # TODO
+            print "do something down"
+        else:
+            log.log_error("Invalid path direction")
+
+        ###### Choosing path size ######
+        if(path_size == "LARGE"):
+            #height of the field (from the center of one gate to the center of the one below)
+            height_distance = 2100.0 + act_overshoot  # 2000 is actual distance
+            #the width of the field (from the center of the left section to the center of the right)
+            width_distance = 1200.0 + act_overshoot - 80  # 1250 is actual distance
+        elif(path_size == "SMALL"):
+            height_distance = 1000.0 + act_overshoot
+            width_distance = 500.0 + act_overshoot - 80
+
+        # Note this is not /quite/ accurate as we aren't actually tavelling at max_speed
+
+        diag_time = math.sqrt(
+            math.pow(width_distance, 2) + math.pow(height_distance, 2)
+            ) / self.__actuator_speed_to_actual_speed(max_speed+100)
+
+        # Store current position in register 0
+        #save_start_position()
+
+        ''' Start movement '''
+        # TODO: Synchronize start and synchronize stop
+        # Start moving diagonally
+        thread.start_new_thread(self.act_move, (self.__y_device, y_hypo))
+        thread.start_new_thread(self.act_move, (self.__x_device, x_hypo))
+        time.sleep(diag_time)
+
+        # Stops y and x movement of actuators
+        self.stop(self.__y_device)
+        self.stop(self.__x_device)
+        ''' End of movement '''
+
+        ''' Overshoot '''
+        # Correct overshoot for the y axis
+        self.act_move(self.__y_device, y_down)
+        time.sleep(self.getOvershootTime(triangle_y_max_speed))
+        self.stop(self.__y_device)
+
+        # Correct overshoot for the x axis
+        self.act_move(self.__x_device, x_left)
+        time.sleep(self.getOvershootTime(triangle_x_max_speed))
+
+        # Stop overshoot
+        self.stop(self.__x_device)
+        time.sleep(act_delay)
+        ''' End of overshoot '''
+
+        # Return to stored start position
+        #return_to_start_position()
+        time.sleep(act_delay)
+
+    def straight_path(self, inverted_x_axis, inverted_y_axis, direction, path_size):
+        """
+        inverted_x_axis = switches x axis direction
+        inverted_y_axis = switches y axis direction
+        direction = direction string stating "LEFT", "RIGHT", "UP" or "DOWN"
+        (not used)path_type = string to specify length of type (i.e., "SMALL", "LARGE")
+        """
+
+        #limits the speeds so that the robot can use a constant speed in each direction
+        max_speed = 240.0  # accurate to 20um
+
+        # stores the movements for the specified directions
+        # Invert directions if needed
+        if(not inverted_x_axis):
+            x_right = _convert_int_to_bytes(max_speed)
+            x_left = _convert_int_to_bytes(-max_speed)
+        else:
+            x_right = _convert_int_to_bytes(-max_speed)
+            x_left = _convert_int_to_bytes(max_speed)
+
+        if(not inverted_y_axis):
+            y_up = _convert_int_to_bytes(max_speed)
+            y_down = _convert_int_to_bytes(-max_speed)
+        else:
+            y_up = _convert_int_to_bytes(-max_speed)
+            y_down = _convert_int_to_bytes(max_speed)
+
+        # delays
+        act_delay = 1.000
+        act_overshoot = 300
+
+        # Check for path size
+        if(path_size == "LARGE"):
+            height_distance = 1950.0 + act_overshoot
+            width_distance = 3050.0 - 100 + act_overshoot
+        elif(path_size == "SMALL"):
+            height_distance = 975.0 + act_overshoot
+            width_distance = 1525.0 - 100 + act_overshoot
+        else:
+            log.log_error("Invalid path size")
+            return
+
+        #the time to lengths of the field
+        x_time = width_distance / self.__actuator_speed_to_actual_speed(max_speed)
+        y_time = height_distance / self.__actuator_speed_to_actual_speed(max_speed)
+
+        overshoot_time = self.getOvershootTime(max_speed)
+
+        #######################
+        ### MOVEMENT STARTS ###
+        #######################
+        if(direction == "LEFT"):
+            # move LEFT
+            self.act_move(self.__x_device, x_left)
+            time.sleep(x_time)
+            self.stop(self.__x_device)
+            # overshoot correction
+            self.act_move(self.__x_device, x_right)
+            time.sleep(overshoot_time)
+            self.stop(self.__x_device)
+
+            time.sleep(act_delay)
+
+        elif(direction == "DOWN"):
+            # move DOWN
+            self.act_move(self.__y_device, y_down)
+            time.sleep(y_time)
+            self.stop(self.__y_device)
+            # overshoot correction
+            self.act_move(self.__y_device, y_up)
+            time.sleep(overshoot_time)
+            self.stop(self.__y_device)
+
+            time.sleep(act_delay)
+
+        elif(direction == "RIGHT"):
+            # move RIGHT
+            self.act_move(self.__x_device, x_right)
+            time.sleep(x_time)
+            self.stop(self.__x_device)
+            # overshoot correction
+            self.act_move(self.__x_device, x_left)
+            time.sleep(overshoot_time)
+            self.stop(self.__x_device)
+
+            time.sleep(act_delay)
+
+        elif(direction == "UP"):
+            # move UP
+            self.act_move(self.__y_device, y_up)
+            time.sleep(y_time)
+            self.stop(self.__y_device)
+            # overshoot correction
+            self.act_move(self.__y_device, y_down)
+            time.sleep(overshoot_time)
+            self.stop(self.__y_device)
+        else:
+            log.log_error("Wrong path direction declared")

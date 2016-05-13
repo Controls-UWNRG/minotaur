@@ -1807,3 +1807,45 @@ class Actuators():
             self.stop(self.__y_device)
         else:
             log.log_error("Wrong path direction declared")
+
+    def store_start_position(self):
+        true_delay = 0.50
+        # Store current position in register 0
+        self.__issue_command(
+            self.__x_device,
+            16,
+            0,
+            0,
+            0,
+            0,
+        )
+        self.__issue_command(
+            self.__y_device,
+            16,
+            0,
+            0,
+            0,
+            0,
+        )
+        time.sleep(true_delay)
+
+    def go_to_start_position(self):
+        true_delay = 0.50
+        # Return to stored position in register 0 (starting position)
+        self.__issue_command(
+            self.__x_device,
+            18,
+            0,
+            0,
+            0,
+            0,
+        )
+        self.__issue_command(
+            self.__y_device,
+            18,
+            0,
+            0,
+            0,
+            0,
+        )
+        time.sleep(true_delay)

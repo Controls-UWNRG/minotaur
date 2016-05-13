@@ -293,9 +293,11 @@ class Controller():
         get_path(self, inverted_x_axis, inverted_y_axis, nodes)
 
     def get_path(self, inverted_x_axis, inverted_y_axis, nodes):
+        self.store_start_pos()
         for i in range(len(nodes) - 1):
             self.move_between_nodes(inverted_x_axis, inverted_y_axis, nodes[i], nodes[i+1])
         return
+        self.go_to_start_pos
 
     def move_between_nodes(self, inverted_x_axis, inverted_y_axis, start_node, dest_node):
         if start_node == "03":
@@ -577,3 +579,16 @@ class Controller():
                                          inverted_y_axis, rad, start, end)
         else:
             self.log_actuator_init_error()
+
+    def store_start_pos(self):
+        if self.__actuators:
+            self.__actuators.store_start_position()
+        else:
+            self.log_actuator_init_error()
+
+    def go_to_start_pos(self):
+        if self.__actuators:
+            self.__actuators.go_to_start_position()
+        else:
+            self.log_actuator_init_error()
+

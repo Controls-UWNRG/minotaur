@@ -53,8 +53,8 @@ def triangle_path(x_axis_inverted, y_axis_inverted):
     _movement_controller.triangle_path(x_axis_inverted, y_axis_inverted, ["UP", "RIGHT"], 0.5)
 
 def circle_path(x_axis_inverted, y_axis_inverted):
-    _movement_controller.circle_path(x_axis_inverted, y_axis_inverted, 1, 0, 90)
-    #_movement_controller.get_path(x_axis_inverted, y_axis_inverted, ["03", "11", "03"])
+    #_movement_controller.circle_path(x_axis_inverted, y_axis_inverted, 1, 180, 225)
+    _movement_controller.get_path(x_axis_inverted, y_axis_inverted, ["03", "11", "20", "31", "43", "35", "26", "15", "03"])
 
 def move_to_circle_start(x_axis_inverted, y_axis_inverted):
     _movement_controller.move_to_circle_start(x_axis_inverted, y_axis_inverted)

@@ -1565,48 +1565,38 @@ class Actuators():
 
         #limits the speeds so that the robot can use a constant speed in each direction
         max_speed = 400.0
+
+        # delays for processing
+        act_delay = 0.50
         act_overshoot = 300
 
         triangle_y_max_speed = 400.0
         triangle_x_max_speed = 275.0
 
         #stores the movements for the specified directions
-        x_left = _convert_int_to_bytes(-max_speed)
-        x_right = _convert_int_to_bytes(max_speed)  # not used
-        y_down = _convert_int_to_bytes(-max_speed)
-        y_up = _convert_int_to_bytes(max_speed)  # not used
-
-        x_hypo = _convert_int_to_bytes(triangle_x_max_speed)
-        y_hypo = _convert_int_to_bytes(triangle_y_max_speed)
-
-        #the delay for the first command to be processed
-        act_delay = 0.50
-
-        ###### Choosing path direction ######
-        if(direction[0] == "LEFT"):
-            # TODO
-            print "do something left"
-        elif(direction[0] == "RIGHT"):
-            # TODO
-            print "do something right"
-        if(direction[1] == "UP"):
-            # TODO
-            print "do something up"
-        elif(direction[1] == "DOWN"):
-            # TODO
-            print "do something down"
+        # accounts for axis inversion
+        if(not inverted_x_axis):
+            x_left = _convert_int_to_bytes(-max_speed)
+            x_right = _convert_int_to_bytes(max_speed)
         else:
-            log.log_error("Invalid path direction")
+            x_left = _convert_int_to_bytes(max_speed)
+            x_right = _convert_int_to_bytes(-max_speed)
+        if(not inverted_y_axis):
+            y_down = _convert_int_to_bytes(-max_speed)
+            y_up = _convert_int_to_bytes(max_speed)
+        else:
+            y_down = _convert_int_to_bytes(max_speed)
+            y_up = _convert_int_to_bytes(-max_speed)
 
         ###### Choosing path size ######
         if(path_size == 1):
             #height of the field (from the center of one gate to the center of the one below)
             height_distance = 2100.0 + act_overshoot  # 2000 is actual distance
             #the width of the field (from the center of the left section to the center of the right)
-            width_distance = 1200.0 + act_overshoot - 80  # 1250 is actual distance
+            width_distance = 1120.0 + act_overshoot  # 1250 is actual distance
         elif(path_size == 0.5):
             height_distance = 1000.0 + act_overshoot
-            width_distance = 500.0 + act_overshoot - 80
+            width_distance = 420.0 + act_overshoot
 
         # Note this is not /quite/ accurate as we aren't actually tavelling at max_speed
 
@@ -1614,38 +1604,101 @@ class Actuators():
             math.pow(width_distance, 2) + math.pow(height_distance, 2)
             ) / self.__actuator_speed_to_actual_speed(max_speed+100)
 
-        # Store current position in register 0
-        #save_start_position()
 
-        ''' Start movement '''
-        # TODO: Synchronize start and synchronize stop
-        # Start moving diagonally
-        thread.start_new_thread(self.act_move, (self.__y_device, y_hypo))
-        thread.start_new_thread(self.act_move, (self.__x_device, x_hypo))
-        time.sleep(diag_time)
+        #######################
+        ### MOVEMENT STARTS ###
+        #######################
+        if(direction[0] == "RIGHT" and direction[1] == "UP"):
+            x_hypo = _convert_int_to_bytes(triangle_x_max_speed)
+            y_hypo = _convert_int_to_bytes(triangle_y_max_speed)
 
-        # Stops y and x movement of actuators
-        self.stop(self.__y_device)
-        self.stop(self.__x_device)
-        ''' End of movement '''
+            # Start moving diagonally
+            thread.start_new_thread(self.act_move, (self.__y_device, y_hypo))
+            thread.start_new_thread(self.act_move, (self.__x_device, x_hypo))
+            time.sleep(diag_time)
 
-        ''' Overshoot '''
-        # Correct overshoot for the y axis
-        self.act_move(self.__y_device, y_down)
-        time.sleep(self.getOvershootTime(triangle_y_max_speed))
-        self.stop(self.__y_device)
+            # Stops y and x movement of actuators
+            self.stop(self.__y_device)
+            self.stop(self.__x_device)
 
-        # Correct overshoot for the x axis
-        self.act_move(self.__x_device, x_left)
-        time.sleep(self.getOvershootTime(triangle_x_max_speed))
+            # Correct overshoot for the y axis
+            self.act_move(self.__y_device, y_down)
+            time.sleep(self.getOvershootTime(triangle_y_max_speed))
+            self.stop(self.__y_device)
 
-        # Stop overshoot
-        self.stop(self.__x_device)
-        time.sleep(act_delay)
-        ''' End of overshoot '''
+            self.act_move(self.__x_device, x_left)
+            time.sleep(self.getOvershootTime(triangle_x_max_speed))
+            self.stop(self.__x_device)
 
-        # Return to stored start position
-        #return_to_start_position()
+        elif(direction[0] == "RIGHT" and direction[1] == "DOWN"):
+            x_hypo = _convert_int_to_bytes(triangle_x_max_speed)
+            y_hypo = _convert_int_to_bytes(-triangle_y_max_speed)
+
+            # Start moving diagonally
+            thread.start_new_thread(self.act_move, (self.__y_device, y_hypo))
+            thread.start_new_thread(self.act_move, (self.__x_device, x_hypo))
+            time.sleep(diag_time)
+
+            # Stops y and x movement of actuators
+            self.stop(self.__y_device)
+            self.stop(self.__x_device)
+
+            # Correct overshoot for the y axis
+            self.act_move(self.__y_device, y_up)
+            time.sleep(self.getOvershootTime(triangle_y_max_speed))
+            self.stop(self.__y_device)
+
+            self.act_move(self.__x_device, x_left)
+            time.sleep(self.getOvershootTime(triangle_x_max_speed))
+            self.stop(self.__x_device)
+
+        if(direction[0] == "LEFT" and direction[1] == "UP"):
+            x_hypo = _convert_int_to_bytes(-triangle_x_max_speed)
+            y_hypo = _convert_int_to_bytes(triangle_y_max_speed)
+
+            # Start moving diagonally
+            thread.start_new_thread(self.act_move, (self.__y_device, y_hypo))
+            thread.start_new_thread(self.act_move, (self.__x_device, x_hypo))
+            time.sleep(diag_time)
+
+            # Stops y and x movement of actuators
+            self.stop(self.__y_device)
+            self.stop(self.__x_device)
+
+            # Correct overshoot for the y axis
+            self.act_move(self.__y_device, y_down)
+            time.sleep(self.getOvershootTime(triangle_y_max_speed))
+            self.stop(self.__y_device)
+
+            self.act_move(self.__x_device, x_right)
+            time.sleep(self.getOvershootTime(triangle_x_max_speed))
+            self.stop(self.__x_device)
+
+        elif(direction[0] == "LEFT" and direction[1] == "DOWN"):
+            x_hypo = _convert_int_to_bytes(-triangle_x_max_speed)
+            y_hypo = _convert_int_to_bytes(-triangle_y_max_speed)
+
+            # Start moving diagonally
+            thread.start_new_thread(self.act_move, (self.__y_device, y_hypo))
+            thread.start_new_thread(self.act_move, (self.__x_device, x_hypo))
+            time.sleep(diag_time)
+
+            # Stops y and x movement of actuators
+            self.stop(self.__y_device)
+            self.stop(self.__x_device)
+
+            # Correct overshoot for the y axis
+            self.act_move(self.__y_device, y_up)
+            time.sleep(self.getOvershootTime(triangle_y_max_speed))
+            self.stop(self.__y_device)
+
+            self.act_move(self.__x_device, x_right)
+            time.sleep(self.getOvershootTime(triangle_x_max_speed))
+            self.stop(self.__x_device)
+
+        else:
+            log.log_error("Invalid path direction")
+
         time.sleep(act_delay)
 
     def straight_path(self, inverted_x_axis, inverted_y_axis, direction, path_size):

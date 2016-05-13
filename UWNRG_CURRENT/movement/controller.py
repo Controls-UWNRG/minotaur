@@ -309,23 +309,19 @@ class Controller():
             return
 
         if start_node == "15":
-            if dest_node in start_node.__adj_nodes:
-                if dest_node == "26":
-                    self.circle_path(inverted_x_axis, inverted_y_axis, 1, 135, 90)
-                elif dest_node == "11":
-                    self.box_path(inverted_x_axis, inverted_y_axis, "DOWN", 1.5)
-                elif dest_node == "03":
-                    self.circle_path(inverted_x_axis, inverted_y_axis, 1, 135, 180)
-                elif dest_node == "35":
-                    self.box_path(inverted_x_axis, inverted_y_axis, "RIGHT", 1.5)
-                else:
-                    #invalid node
-                    log.log_info("Invalid node")
-                    return
-                log.log_info(start_node + " to " + dest_node)
+            if dest_node == "26":
+                self.circle_path(inverted_x_axis, inverted_y_axis, 1, 135, 90)
+            elif dest_node == "11":
+                self.box_path(inverted_x_axis, inverted_y_axis, "DOWN", 1.5)
+            elif dest_node == "03":
+                self.circle_path(inverted_x_axis, inverted_y_axis, 1, 135, 180)
+            elif dest_node == "35":
+                self.box_path(inverted_x_axis, inverted_y_axis, "RIGHT", 1.5)
             else:
                 #invalid node
                 log.log_info("Invalid node")
+                return
+            log.log_info(start_node + " to " + dest_node)
             return
 
         if start_node == "20":
@@ -536,14 +532,14 @@ class Controller():
     # This is the LARGE diagonal path
     def triangle_path(self, inverted_x_axis, inverted_y_axis, dir, size):
         if self.__actuators:
-            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, dir, "LARGE")
+            self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, dir, size)
         else:
             self.log_actuator_init_error()
 
     # This is the straight path
     def box_path(self, inverted_x_axis, inverted_y_axis, dir, size):
         if self.__actuators:
-            self.__actuators.straight_path(inverted_x_axis, inverted_y_axis, "DOWN", "LARGE")
+            self.__actuators.straight_path(inverted_x_axis, inverted_y_axis, "DOWN", size)
         else:
             self.log_actuator_init_error()
 

@@ -466,13 +466,23 @@ class Actuators():
         #handle CW paths
         if total_time < 0:
             total_time = -1 * total_time
-            angle_increment = -5
+            #inverted_x_axis = not inverted_x_axis
+            inverted_y_axis = not inverted_y_axis
+        
+        invert_x = -1
+        invert_y = 1
+
+        if (inverted_x_axis):
+            invert_x = 1
+        
+        if (inverted_y_axis):
+            invert_y = -1
 
         def get_new_x_speed(theta):
-            return (-1)*radius*math.sin(math.radians(theta))
+            return (invert_x)*radius*math.sin(math.radians(theta))
 
         def get_new_y_speed(theta):
-            return radius*math.cos(math.radians(theta))
+            return (invert_y)*radius*math.cos(math.radians(theta))
 
         while current_time < total_time:
             x_speed = _convert_int_to_bytes(get_new_x_speed(angle)*x_multiplier)

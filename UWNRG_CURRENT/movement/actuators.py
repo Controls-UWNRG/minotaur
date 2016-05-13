@@ -1590,9 +1590,7 @@ class Actuators():
 
         ###### Choosing path size ######
         if(path_size == 1):
-            #height of the field (from the center of one gate to the center of the one below)
             height_distance = 2100.0 + act_overshoot  # 2000 is actual distance
-            #the width of the field (from the center of the left section to the center of the right)
             width_distance = 1120.0 + act_overshoot  # 1250 is actual distance
         elif(path_size == 0.5):
             height_distance = 1000.0 + act_overshoot
@@ -1603,7 +1601,6 @@ class Actuators():
         diag_time = math.sqrt(
             math.pow(width_distance, 2) + math.pow(height_distance, 2)
             ) / self.__actuator_speed_to_actual_speed(max_speed+100)
-
 
         #######################
         ### MOVEMENT STARTS ###
@@ -1734,14 +1731,15 @@ class Actuators():
 
         # Check for path size
         if(path_size == 1.5):
-            height_distance = 1950.0 + act_overshoot
-            width_distance = 3050.0 - 100 + act_overshoot
+            path_distance = 1500.0
         elif(path_size == 1):
-            height_distance = 975.0 + act_overshoot
-            width_distance = 1525.0 - 100 + act_overshoot
+            path_distance = 1000.0
         else:
             log.log_error("Invalid path size")
             return
+
+        height_distance = path_distance + act_overshoot
+        width_distance = path_distance + act_overshoot
 
         #the time to lengths of the field
         x_time = width_distance / self.__actuator_speed_to_actual_speed(max_speed)

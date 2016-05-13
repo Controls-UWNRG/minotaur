@@ -1599,12 +1599,12 @@ class Actuators():
             log.log_error("Invalid path direction")
 
         ###### Choosing path size ######
-        if(path_size == "LARGE"):
+        if(path_size == 1):
             #height of the field (from the center of one gate to the center of the one below)
             height_distance = 2100.0 + act_overshoot  # 2000 is actual distance
             #the width of the field (from the center of the left section to the center of the right)
             width_distance = 1200.0 + act_overshoot - 80  # 1250 is actual distance
-        elif(path_size == "SMALL"):
+        elif(path_size == 0.5):
             height_distance = 1000.0 + act_overshoot
             width_distance = 500.0 + act_overshoot - 80
 
@@ -1680,10 +1680,10 @@ class Actuators():
         act_overshoot = 300
 
         # Check for path size
-        if(path_size == "LARGE"):
+        if(path_size == 1.5):
             height_distance = 1950.0 + act_overshoot
             width_distance = 3050.0 - 100 + act_overshoot
-        elif(path_size == "SMALL"):
+        elif(path_size == 1):
             height_distance = 975.0 + act_overshoot
             width_distance = 1525.0 - 100 + act_overshoot
         else:

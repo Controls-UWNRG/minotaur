@@ -62,7 +62,7 @@ class Controller():
     #     else:
     #         log.log_error("Actuators have not been initialized" \
     #                       " with a com-port properly.")
-    
+
     def move_to_circle_start(self, inverted_x_axis, inverted_y_axis):
         if self.__actuators:
             self.__actuators.move_to_circle_start(inverted_x_axis,
@@ -264,52 +264,297 @@ class Controller():
         self.initialize_solenoids()
 
     """----------------------------------ICRA 2016!!!---------------------------------"""
-    # def move_between_nodes(self, start_node, dest_node):
-    #     if start_node.__name == "03":
-    #         if dest_node.__name in start_node.__adj_nodes:
-    #             if dest_node.__name == "02":
-    #                 # Go down 1 unit, go right 1 unit
-    #                 log.log_info("a")
-    #             elif dest_node.__name == "26":
-    #                 # Go up 1 unit, go right 1 unit
-    #                 log.log_info("a")
-    #             elif dest_node.__name == "11":
-    #                 # Circle(radius = 1, start = 180, end = 225)
-    #                 log.log_info("a")
-    #             elif dest_node.__name == "15":
-    #                 # Circle(radius = 1, start = 180, end = 135)
-    #                 log.log_info("a")
-    #             else:
-    #                 #invalid node
-    #                 log.log_info("Invalid node")
-    #         else:
-    #             #invalid node
-    #             log.log_info("Invalid node")
-    #
-    #         return
-    #
-    #     if start_node.__name == "11":
-    #         if dest_node.__name in start_node.__adj_nodes:
-    #             if dest_node.__name == "02":
-    #                 # Go down 1 unit, go right 1 unit
-    #                 log.log_info("a")
-    #             elif dest_node.__name == "26":
-    #                 # Go up 1 unit, go right 1 unit
-    #                 log.log_info("a")
-    #             elif dest_node.__name == "11":
-    #                 # Circle(radius = 1, start = 180, end = 225)
-    #                 log.log_info("a")
-    #             elif dest_node.__name == "15":
-    #                 # Circle(radius = 1, start = 180, end = 135)
-    #                 log.log_info("a")
-    #             else:
-    #                 #invalid node
-    #                 log.log_info("Invalid node")
-    #         else:
-    #             #invalid node
-    #             log.log_info("Invalid node")
-    #
-    #         return
+    def move_between_nodes(self, start_node, dest_node):
+        if start_node.__name == "03":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "20":
+                    # Go down 1 unit, go right 1 unit
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "DOWN", 1)
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "RIGHT", 1)
+                elif dest_node.__name == "26":
+                    # Go up 1 unit, go right 1 unit
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "UP", 1)
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "RIGHT", 1)
+                elif dest_node.__name == "11":
+                    # Circle(radius = 1, start = 180, end = 225)
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 180, 225)
+                elif dest_node.__name == "15":
+                    # Circle(radius = 1, start = 180, end = 135)
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 180, 135)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "11":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "03":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 225, 180)
+                elif dest_node.__name == "15":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "UP", 1.5)
+                elif dest_node.__name == "20":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 225, 270)
+                elif dest_node.__name == "31":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "RIGHT", 1.5)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "15":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "26":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 135, 90)
+                elif dest_node.__name == "11":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "DOWN", 1.5)
+                elif dest_node.__name == "03":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 135, 180)
+                elif dest_node.__name == "35":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "RIGHT", 1.5)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "20":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "03":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "LEFT", 1)
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "UP", 1)
+                elif dest_node.__name == "40":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "RIGHT", 1)
+                elif dest_node.__name == "11":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 270, 225)
+                elif dest_node.__name == "31":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 270, 315)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "26":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "03":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "LEFT", 1)
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "DOWN", 1)
+                elif dest_node.__name == "46":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "RIGHT", 1)
+                elif dest_node.__name == "35":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 90, 45)
+                elif dest_node.__name == "15":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 90, 135)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "31":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "43":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 315, 360)
+                elif dest_node.__name == "35":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "UP", 1.5)
+                elif dest_node.__name == "20":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 315, 270)
+                elif dest_node.__name == "15":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "LEFT", 1.5)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "35":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "26":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 45, 90)
+                elif dest_node.__name == "31":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "DOWN", 1.5)
+                elif dest_node.__name == "43":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 45, 0)
+                elif dest_node.__name == "15":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "LEFT", 1.5)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "40":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "20":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "LEFT", 1)
+                elif dest_node.__name == "43":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "UP", 1)
+                elif dest_node.__name == "52":
+                    self.triangle_path(self, inverted_x_axis, inverted_y_axis, ["UP", "RIGHT"], 0.5)
+                elif dest_node.__name == "73":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "RIGHT", 1)
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "UP", 1)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "46":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "26":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "LEFT", 1)
+                elif dest_node.__name == "43":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "DOWN", 1)
+                elif dest_node.__name == "76":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "RIGHT", 1)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "43":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "31":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 360, 315)
+                elif dest_node.__name == "40":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "DOWN", 1)
+                elif dest_node.__name == "35":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 1, 0, 45)
+                elif dest_node.__name == "46":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "UP", 1)
+                elif dest_node.__name == "52":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 0.5, 180, 225)
+                elif dest_node.__name == "64":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 0.5, 180, 45)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "52":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "40":
+                    self.triangle_path(self, inverted_x_axis, inverted_y_axis, ["DOWN", "LEFT"], 0.5)
+                elif dest_node.__name == "43":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 0.5, 225, 180)
+                elif dest_node.__name == "64":
+                    self.triangle_path(self, inverted_x_axis, inverted_y_axis, ["UP", "RIGHT"], 1)
+                elif dest_node.__name == "73":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 0.5, 225, 360)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "64":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "52":
+                    self.triangle_path(self, inverted_x_axis, inverted_y_axis, ["DOWN", "LEFT"], 1)
+                elif dest_node.__name == "43":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 0.5, 45, 180)
+                elif dest_node.__name == "76":
+                    self.triangle_path(self, inverted_x_axis, inverted_y_axis, ["UP", "RIGHT"], 0.5)
+                elif dest_node.__name == "73":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 0.5, 45, 0)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "73":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "40":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "DOWN", 1)
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "LEFT", 1)
+                elif dest_node.__name == "76":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "UP", 1)
+                elif dest_node.__name == "52":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 0.5, 360, 225)
+                elif dest_node.__name == "64":
+                    self.circle_path(self, inverted_x_axis, inverted_y_axis, 0.5, 0, 45)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
+        if start_node.__name == "76":
+            if dest_node.__name in start_node.__adj_nodes:
+                if dest_node.__name == "46":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "LEFT", 1)
+                elif dest_node.__name == "73":
+                    self.box_path(self, inverted_x_axis, inverted_y_axis, "DOWN", 1)
+                elif dest_node.__name == "64":
+                    self.triangle_path(self, inverted_x_axis, inverted_y_axis, ["DOWN", "LEFT"], 0.5)
+                else:
+                    #invalid node
+                    log.log_info("Invalid node")
+                    return
+                log.log_info(start_node.__name + " to " + dest_node.__name)
+            else:
+                #invalid node
+                log.log_info("Invalid node")
+            return
+
 
     def initialize_nodes(self):
         log.log_info("Nodes initialized.")
@@ -323,7 +568,7 @@ class Controller():
             Node("35", {"26", "31", "43", "15"}),
             Node("40", {"20", "43", "52", "73"}),
             Node("46", {"26", "43", "76"}),
-            Node("43", {"31", "40", "35", "46"}),
+            Node("43", {"31", "40", "35", "46", "52", "64"}),
             Node("52", {"40", "43", "64", "73"}),
             Node("64", {"52", "43", "76", "73"}),
             Node("73", {"40", "52", "64", "76"}),
@@ -336,20 +581,20 @@ class Controller():
 
     ''' HIJACKED ICRA 2015 CODE!!!!!!! ACTUAL CODE IS COMMENTED OUT ABOVE '''
     # This is the LARGE diagonal path
-    def triangle_path(self, inverted_x_axis, inverted_y_axis):
+    def triangle_path(self, inverted_x_axis, inverted_y_axis, dir, size):
         if self.__actuators:
             self.__actuators.diagonal_path(inverted_x_axis, inverted_y_axis, ["DOWN", "LEFT"], "LARGE")
         else:
             self.log_actuator_init_error()
 
     # This is the straight path
-    def box_path(self, inverted_x_axis, inverted_y_axis):
+    def box_path(self, inverted_x_axis, inverted_y_axis, dir, size):
         if self.__actuators:
             self.__actuators.straight_path(inverted_x_axis, inverted_y_axis, "DOWN", "LARGE")
         else:
             self.log_actuator_init_error()
 
-    def circle_path(self, inverted_x_axis, inverted_y_axis):
+    def circle_path(self, inverted_x_axis, inverted_y_axis, rad, start, end):
         if self.__actuators:
             self.__actuators.circle_path(inverted_x_axis,
                                          inverted_y_axis, 1, 0, 180)

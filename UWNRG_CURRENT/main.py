@@ -382,11 +382,11 @@ class MainWindow:
                                           self.__end_keyboard_movement_instruction,
             "on_video_menu_web_cam_toggled" : self.__video_menu_web_cam_toggle,
             "on_video_menu_micro_cam_toggled" : self.__video_menu_micro_cam_toggle,
-            "on_saveIRSettings_activate" : self.__update_ir_settings
+            "on_saveIRSettings_activate" : self.__update_ir_settings,
 
             ### ---- ICRA 2016 ---- ###
-            ,
-            "on_pick_window" : self.__open_pick_path_window
+            "on_pick_path" : self.__open_pick_path_window,
+            "on_path_ok_clicked" : self.__set_shape_counts
         }
 
         self.__builder = gtk.Builder()

@@ -251,6 +251,53 @@ class MainWindow:
         shape_window = self.__builder.get_object("pick_shape_window")
         shape_window.hide()
 
+    """
+    ---------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------- ICRA 2016 ------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------
+    """
+    def __open_pick_path_window(self, menu_item):
+        path_window = self.__builder.get_object("pick_path_window")
+        path_window.show()
+
+    # TODO: get proper data from the GUI
+    def __set_node_path(self, button):
+        log.log_info("Setting node path")
+        node_num = 14
+        path_info = [None] * node_num
+        used_order = [False] * node_num
+
+        for node in range(0, node_num):
+            order_object = self.__builder.get_object("order_node" + node)
+            order = order_object.get_text()
+            if (not order.isdigit()):
+                log.log_error("Order must be numbers")
+            elif int(order) <= 0:
+                # node not used
+                continue
+            else:
+                index = int(order)-1
+                if used_order[index]:
+                    log.log_error("Duplicate order number {0}".format(index+1))
+                    return
+
+                used_order[index] = True
+                print node+1
+                path_info[index] = "node" + str(node+1)
+        self.__close_pick_path_window(button)
+
+        # facade.draw_path(self.__x_axis_inverted, self.__y_axis_inverted, path_info)
+
+    def __close_pick_path_window(self, button):
+        path_window = self.__builder.get_object("pick_path_window")
+        path_window.hide()
+
+    """
+    ---------------------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------ END ----------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------
+    """
+
     def __navigate_maze(self, menu_item):
         """ Strip out the selected paths and pass them to the movement controller """
 
@@ -332,6 +379,11 @@ class MainWindow:
             "on_pick_shapes" : self.__open_pick_shapes_window,
             "on_shape_ok_clicked" : self.__set_shape_counts,
             "on_shape_cancel_clicked" : self.__close_pick_shapes_window,
+            ### ---- ICRA 2016 ---- ###
+            "on_pick_path" : self.__open_pick_path_window,
+            "on_path_ok_clicked" : self.__set_node_path,
+            "on_path_cancel_clicked": self.__close_pick_path_window,
+            ########## END ############
             "on_video_camera_activate" : self.__video_camera,
             "on_navigate_maze" : self.__open_maze_navigate_dialog,
             "on_main_window_key_release_event" :

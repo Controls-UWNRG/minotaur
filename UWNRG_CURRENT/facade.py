@@ -49,6 +49,20 @@ def box_path(x_axis_inverted, y_axis_inverted):
 def draw_shapes(x_axis_inverted, y_axis_inverted, shape_info):
     _movement_controller.draw_shapes(x_axis_inverted, y_axis_inverted, shape_info)
 
+"""
+---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------- ICRA 2016 ------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+"""
+def draw_path(x_axis_inverted, y_axis_inverted, path_info):
+    _movement_controller.draw_path(x_axis_inverted, y_axis_inverted, path_info)
+
+"""
+---------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------ END ----------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+"""
+
 def triangle_path(x_axis_inverted, y_axis_inverted):
     _movement_controller.triangle_path(x_axis_inverted, y_axis_inverted, ["UP", "RIGHT"], 0.5)
 

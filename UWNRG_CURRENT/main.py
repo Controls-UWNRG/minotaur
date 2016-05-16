@@ -266,7 +266,9 @@ class MainWindow:
         node_num = 14
         path_info = [None] * node_num
         used_order = [False] * node_num
+        # count = self.__builder.get_object("count")
 
+        # for n in range(0, count):
         for node in range(0, node_num):
             order_object = self.__builder.get_object("order_node" + node)
             order = order_object.get_text()
@@ -284,9 +286,9 @@ class MainWindow:
                 used_order[index] = True
                 print node+1
                 path_info[index] = "node" + str(node+1)
-        self.__close_pick_path_window(button)
 
-        # facade.draw_path(self.__x_axis_inverted, self.__y_axis_inverted, path_info)
+        self.__close_pick_path_window(button)
+        facade.draw_path(self.__x_axis_inverted, self.__y_axis_inverted, path_info)
 
     def __close_pick_path_window(self, button):
         path_window = self.__builder.get_object("pick_path_window")

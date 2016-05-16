@@ -43,9 +43,6 @@ def mark_path(mouse_event):
     _ir.mark_point(mouse_event.x, mouse_event.y)
     log.log_info("Point marked at " + (str)(mouse_event.x) + ", "  + (str)(mouse_event.y) + ".")
 
-def box_path(x_axis_inverted, y_axis_inverted):
-    _movement_controller.box_path(x_axis_inverted, y_axis_inverted, "RIGHT", 1)
-
 def draw_shapes(x_axis_inverted, y_axis_inverted, shape_info):
     _movement_controller.draw_shapes(x_axis_inverted, y_axis_inverted, shape_info)
 
@@ -57,18 +54,23 @@ def draw_shapes(x_axis_inverted, y_axis_inverted, shape_info):
 def draw_path(x_axis_inverted, y_axis_inverted, path_info):
     _movement_controller.draw_path(x_axis_inverted, y_axis_inverted, path_info)
 
+def box_path(x_axis_inverted, y_axis_inverted):
+    _movement_controller.box_path(x_axis_inverted, y_axis_inverted, "RIGHT", 1)
+    # _movement_controller.box_path(x_axis_inverted, y_axis_inverted, "RIGHT", 1.5)
+
+def triangle_path(x_axis_inverted, y_axis_inverted):
+    _movement_controller.triangle_path(x_axis_inverted, y_axis_inverted, ["DOWN", "LEFT"], 0.5)
+    # _movement_controller.triangle_path(x_axis_inverted, y_axis_inverted, ["DOWN", "LEFT"], 1)
+
+def circle_path(x_axis_inverted, y_axis_inverted):
+    _movement_controller.circle_path(x_axis_inverted, y_axis_inverted, 1, 180, 225)
+    #_movement_controller.get_path(x_axis_inverted, y_axis_inverted, ["03", "11", "20", "31", "43", "35", "26", "15", "03"])
+
 """
 ---------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------ END ----------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------
 """
-
-def triangle_path(x_axis_inverted, y_axis_inverted):
-    _movement_controller.triangle_path(x_axis_inverted, y_axis_inverted, ["UP", "RIGHT"], 0.5)
-
-def circle_path(x_axis_inverted, y_axis_inverted):
-    _movement_controller.circle_path(x_axis_inverted, y_axis_inverted, 1, 180, 225)
-    #_movement_controller.get_path(x_axis_inverted, y_axis_inverted, ["03", "11", "20", "31", "43", "35", "26", "15", "03"])
 
 def move_to_circle_start(x_axis_inverted, y_axis_inverted):
     _movement_controller.move_to_circle_start(x_axis_inverted, y_axis_inverted)

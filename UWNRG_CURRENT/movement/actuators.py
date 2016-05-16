@@ -1519,7 +1519,6 @@ class Actuators():
             device,
             22, bytes[0], bytes[1], bytes[2], bytes[3]
         )
-        print "move"
 
     def stop(self, device):
         log.log_info("Stopping actuators")
